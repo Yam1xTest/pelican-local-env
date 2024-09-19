@@ -1,0 +1,4 @@
+.DS_Store
+
+# this file is dynamic and is populated after kind create cluster or kind delete cluster commands
+.pelican-cluster-kubeconfig
