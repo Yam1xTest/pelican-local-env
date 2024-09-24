@@ -19,9 +19,9 @@ releases:
     values:
       - values-ingress-nginx.yaml.gotmpl
 
-  - name: pelican-ui
+  - name: pelican
     labels:
-      app: pelican-ui
+      app: pelican
     wait: true
     chart: bitnami/nginx
     # after 15.3.5 our docker file or setup can no longer start, need to investigate what is wrong for the newer versions
@@ -34,5 +34,3 @@ releases:
       # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
       - git::https://github.com/TourmalineCore/pelican-ui.git@/ci/values.yaml?ref=feature/add-build-image-in-github-registry
       - values.yaml.gotmpl
-      - values-pelican-ui.yaml.gotmpl
-
