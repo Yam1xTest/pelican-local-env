@@ -1,0 +1,17 @@
+global:
+    postgresql:
+        auth:
+            postgresPassword: admin
+            username: postgres
+            password: admin
+            database: pelican_db
+
+primary:
+    service:
+        type: NodePort
+        nodePorts:
+            postgresql: 30125
+
+#    persistence:
+#        size: {{ env "POSTGRES_PV_SIZE" }}
+

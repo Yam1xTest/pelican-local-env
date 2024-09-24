@@ -19,6 +19,17 @@ releases:
     values:
       - values-ingress-nginx.yaml.gotmpl
 
+  - name: postgresql
+    namespace: default
+    labels:
+      app: postgresql
+    wait: true
+    chart: bitnami/postgresql
+    version: 12.2.7
+    values:
+      - values-postgre.yaml
+      - values-postgre.yaml.gotmpl
+
   - name: pelican
     labels:
       app: pelican
