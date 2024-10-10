@@ -57,6 +57,7 @@ releases:
     # thus we wait for it to be ready first
     needs: 
       - ingress-nginx
+      - postgresql
     values:
       # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
       - git::https://github.com/TourmalineCore/pelican-cms.git@/ci/values.yaml?ref=feature/add-cms-app
