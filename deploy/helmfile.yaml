@@ -61,5 +61,5 @@ releases:
     values:
       # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
       - git::https://github.com/TourmalineCore/pelican-cms.git@/ci/values.yaml?ref=feature/fix-ingress
-      - values-cms.yaml.gotmpl
       - values.yaml.gotmpl
+      - values-cms.yaml.gotmpl
