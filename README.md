@@ -86,7 +86,7 @@ helmfile cache cleanup && helmfile --environment local --namespace local -f depl
 
 ## Services URLs
 
-- ui: http://pelican.local.tourmalinecore.internal/pelican
+- ui: http://pelican.local.tourmalinecore.internal
 - api: http://pelican.local.tourmalinecore.internal/api/pelican-api/api
 
 ## Troubleshooting
