@@ -43,7 +43,7 @@ releases:
       - ingress-nginx
     values:
       # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
-      - git::https://github.com/TourmalineCore/pelican-ui.git@/ci/values.yaml?ref=feature/add-build-image-in-github-registry
+      - git::https://github.com/TourmalineCore/pelican-ui.git@/ci/values.yaml?ref=master
       - values.yaml.gotmpl
 
   - name: pelican-cms
@@ -60,6 +60,6 @@ releases:
       - postgresql
     values:
       # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
-      - git::https://github.com/TourmalineCore/pelican-cms.git@/ci/values.yaml?ref=feature/add-cms-app
+      - git::https://github.com/TourmalineCore/pelican-cms.git@/ci/values.yaml?ref=master
       - values.yaml.gotmpl
       - values-cms.yaml.gotmpl
