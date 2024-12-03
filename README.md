@@ -68,7 +68,7 @@ To deploy the stack to the cluster at the first time or re-deploy it after a cha
 helmfile cache cleanup && helmfile --environment local --namespace local -f deploy/helmfile.yaml apply
 ```
 
-When the command is complete and all k8s pods are running inside **`local`** namespace you should be able to navigate to http://pelican.local.tourmalinecore.internal/ in your browser and see `Hello World`.
+When the command is complete and all k8s pods are running inside **`local`** namespace you should be able to navigate to http://pelican.local.tourmalinecore.internal:40110/ in your browser and see `Hello World`.
 
 >Note: at the first time this really takes a while.
 
@@ -86,8 +86,8 @@ helmfile cache cleanup && helmfile --environment local --namespace local -f depl
 
 ## Services URLs
 
-- ui: http://pelican.local.tourmalinecore.internal
-- api: http://pelican.local.tourmalinecore.internal/api/pelican-api/api
+- ui: http://pelican.local.tourmalinecore.internal:40110
+- api: http://pelican.local.tourmalinecore.internal:40110/api/pelican-api/api
 
 ## Troubleshooting
 - OpenLens not showing any pods, deployments, etc.. Make sure the "Namespace" in view "Workloads" is set to "`local`" or "`All namespaces`"
