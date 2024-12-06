@@ -1,3 +1,5 @@
+# Pelican local env, AGPL-3.0 license
+
 repositories:
   - name: bitnami
     url: https://charts.bitnami.com/bitnami
@@ -28,6 +30,15 @@ releases:
     version: 12.2.7
     values:
       - values-postgre.yaml.gotmpl
+
+  - name: minio-s3
+    labels:
+      app: minio-s3
+    wait: true
+    chart: bitnami/minio
+    version: 14.8.5
+    values: 
+      - values-minio.yaml.gotmpl
 
   - name: pelican
     labels:
