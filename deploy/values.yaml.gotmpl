@@ -5,6 +5,9 @@ ingress:
   annotations:
     # to do not redirect from http to https
     nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    # the maximum allowed size of the client's request body
+    nginx.ingress.kubernetes.io/proxy-body-size: "30m"
+    
   tls: false
 
 service:
