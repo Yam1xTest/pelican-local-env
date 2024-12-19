@@ -98,6 +98,12 @@ helmfile cache cleanup && helmfile --environment local --namespace local -f depl
     - `login`: *admin*
     - `password`: *rootPassword*
 
+## Opening the CMS admin panel web interface
+- Open http://pelican.local.tourmalinecore.internal:40110/cms/admin
+- Enter login and password:
+    - `email`: *admin@init-strapi-admin.strapi.io*
+    - `password`: *admin*
+
 ## Troubleshooting
 - OpenLens not showing any pods, deployments, etc.. Make sure the "Namespace" in view "Workloads" is set to "`local`" or "`All namespaces`"
 
