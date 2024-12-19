@@ -22,3 +22,24 @@ extraConfigMapEnvVars:
   AWS_PUBLIC_ENDPOINT: "http://minio-s3.pelican.local.tourmalinecore.internal:40110/pelican-local-env"
   AWS_REGION: "us-east-1"
   AWS_BUCKET: "pelican-local-env"
+
+initContainers:
+  - name: wait-and-set-bucket-policy
+    image: curlimages/curl  
+    command: ['sh', '-c']
+    args:
+      - |
+        host="http://http://minio-s3-console.pelican.local.tourmalinecore.internal:40110/login"
+        while ! curl -s $host; do
+          echo "Waiting for MinIO to be ready...";
+          sleep 5;
+        done
+
+        mc alias set local $host admin rootPassword
+
+        until mc ls local/pelican-local-env; do
+          echo "Waiting for bucket to be available...";
+          sleep 5;
+        done
+
+        mc policy set public local/pelican-local-env
