@@ -30,7 +30,7 @@ initContainers:
     args:
       - |
         while ! mc alias set myminio http://minio-s3:9000 admin rootPassword; do
-          echo "Waiting for MinIO to be ready..."
+          echo "Waiting for MinIO to be ready... Pod isn't alive yet"
           sleep 10
         done
         mc mb myminio/pelican-local-env
