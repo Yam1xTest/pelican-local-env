@@ -16,6 +16,8 @@ To be able to open locally the app you need to add its domain to your OS `hosts`
 Open this file `C:\Windows\System32\drivers\etc\hosts` in **Administrator** mode in e.g. `Notepad` and add the following line to it:
 ```
 127.0.0.1       pelican.local.tourmalinecore.internal
+127.0.0.1       minio-s3-console.pelican.local.tourmalinecore.internal
+127.0.0.1       minio-s3.pelican.local.tourmalinecore.internal
 ```
 
 ### For MacOS
@@ -87,7 +89,20 @@ helmfile cache cleanup && helmfile --environment local --namespace local -f depl
 ## Services URLs
 
 - ui: http://pelican.local.tourmalinecore.internal:40110
-- api: http://pelican.local.tourmalinecore.internal:40110/api/pelican-api/api
+- api: http://pelican.local.tourmalinecore.internal:40110/cms/admin
+- minio-s3-ui: http://minio-s3-console.pelican.local.tourmalinecore.internal:40110
+
+## Opening the minio-s3 web interface
+- Open http://minio-s3-console.pelican.local.tourmalinecore.internal:40110
+- Enter login and password:
+    - `login`: *admin*
+    - `password`: *rootPassword*
+
+## Opening the CMS admin panel web interface
+- Open http://pelican.local.tourmalinecore.internal:40110/cms/admin
+- Enter login and password:
+    - `email`: *admin@init-strapi-admin.strapi.io*
+    - `password`: *admin*
 
 ## Troubleshooting
 - OpenLens not showing any pods, deployments, etc.. Make sure the "Namespace" in view "Workloads" is set to "`local`" or "`All namespaces`"

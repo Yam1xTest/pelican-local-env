@@ -1,3 +1,5 @@
+# Pelican local env, AGPL-3.0 license
+
 # related discussion https://stackoverflow.com/a/69009486
 # kind docs regarding this bit https://kind.sigs.k8s.io/docs/user/configuration#nodeport-with-port-mappings
 

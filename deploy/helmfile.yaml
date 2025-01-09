@@ -1,3 +1,5 @@
+# Pelican local env, AGPL-3.0 license
+
 repositories:
   - name: bitnami
     url: https://charts.bitnami.com/bitnami
@@ -29,6 +31,15 @@ releases:
     values:
       - values-postgre.yaml.gotmpl
 
+  - name: minio-s3
+    labels:
+      app: minio-s3
+    wait: true
+    chart: bitnami/minio
+    version: 14.8.5
+    values: 
+      - values-minio.yaml.gotmpl
+
   - name: pelican
     labels:
       app: pelican
@@ -44,6 +55,7 @@ releases:
       # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
       - git::https://github.com/TourmalineCore/pelican-ui.git@/ci/values.yaml?ref=master
       - values.yaml.gotmpl
+      - values-ui.yaml.gotmpl
 
   - name: pelican-cms
     labels:

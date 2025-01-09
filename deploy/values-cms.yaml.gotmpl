@@ -1,3 +1,5 @@
+# Pelican local env, AGPL-3.0 license
+
 extraConfigMapEnvVars:
   HOST: "0.0.0.0"
   PORT: "1337"
@@ -14,3 +16,24 @@ extraConfigMapEnvVars:
   DATABASE_SSL: "false"
   JWT_SECRET: "xRbyekJVuwhmMeAT7js05g=="
   SERVER_URL: "http://pelican.local.tourmalinecore.internal:40110/cms"
+  AWS_ACCESS_KEY_ID: "admin"
+  AWS_ACCESS_SECRET_KEY: "rootPassword"
+  AWS_ENDPOINT: "http://minio-s3:9000"
+  AWS_PUBLIC_ENDPOINT: "http://minio-s3.pelican.local.tourmalinecore.internal:40110/pelican-local-env"
+  AWS_REGION: "us-east-1"
+  AWS_BUCKET: "pelican-local-env"
+
+initContainers:
+  - name: create-bucket
+    image: minio/mc
+    command: ["/bin/sh", "-c"]
+    args:
+      - |
+        while ! mc alias set myminio http://minio-s3:9000 admin rootPassword; do
+          echo "Waiting for MinIO to be ready... Pod isn't alive yet"
+          sleep 10
+        done
+        mc mb myminio/pelican-local-env
+        mc policy set public myminio/pelican-local-env
+        mc anonymous set download myminio/pelican-local-env
+        mc policy myminio/pelican-local-env

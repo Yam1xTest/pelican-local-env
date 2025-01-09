@@ -1,0 +1,21 @@
+# Pelican local env, AGPL-3.0 license
+
+# here you can find the readme of the config of the used version of minio chart https://github.com/bitnami/charts/blob/main/bitnami/minio/README.md
+# here you can find the default values.yaml that we partially override in this file https://github.com/bitnami/charts/blob/main/bitnami/minio/values.yaml
+
+auth:
+  rootPassword: rootPassword
+
+defaultBuckets: pelican-local-env
+
+ingress:
+  enabled: true
+  ingressClassName: "nginx"
+  hostname: minio-s3-console.{{ .Values.hostname }}
+  path: /
+
+apiIngress:
+  enabled: true
+  ingressClassName: "nginx"
+  hostname: minio-s3.{{ .Values.hostname }}
+  path: /
