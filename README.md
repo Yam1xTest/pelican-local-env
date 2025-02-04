@@ -7,23 +7,6 @@
 3. Install Visual Studio Code [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) Extension
 3. Install [Lens (commercial)](https://k8slens.dev/) or [OpenLens (open source)](https://github.com/MuhammedKalkan/OpenLens/releases)
 
-## Register local artificial domain in hosts (DO ONLY ONCE)
-
-To be able to open locally the app you need to add its domain to your OS `hosts`.
-
-### For Windows
-
-Open this file `C:\Windows\System32\drivers\etc\hosts` in **Administrator** mode in e.g. `Notepad` and add the following line to it:
-```
-127.0.0.1       pelican.local.tourmalinecore.internal
-127.0.0.1       minio-s3-console.pelican.local.tourmalinecore.internal
-127.0.0.1       minio-s3.pelican.local.tourmalinecore.internal
-```
-
-### For MacOS
-
-https://www.hostinger.com/tutorials/how-to-edit-hosts-file-macos
-
 ## VSCode Dev Container
 
 Open this repo's folder in VSCode, it might immediately propose you to re-open it in a Dev Container or you can click on `Remote Explorer`, find plus button and choose the `Open Current Folder in Container` option and wait when it is ready.
@@ -70,7 +53,7 @@ To deploy the stack to the cluster at the first time or re-deploy it after a cha
 helmfile cache cleanup && helmfile --environment local --namespace local -f deploy/helmfile.yaml apply
 ```
 
-When the command is complete and all k8s pods are running inside **`local`** namespace you should be able to navigate to http://pelican.local.tourmalinecore.internal:40110/ in your browser and see `Hello World`.
+When the command is complete and all k8s pods are running inside **`local`** namespace you should be able to navigate to http://localhost:40110/ in your browser and see `Hello World`.
 
 >Note: at the first time this really takes a while.
 
@@ -88,18 +71,18 @@ helmfile cache cleanup && helmfile --environment local --namespace local -f depl
 
 ## Services URLs
 
-- ui: http://pelican.local.tourmalinecore.internal:40110
-- api: http://pelican.local.tourmalinecore.internal:40110/cms/admin
-- minio-s3-ui: http://minio-s3-console.pelican.local.tourmalinecore.internal:40110
+- ui: http://localhost:40110
+- api: http://localhost:40110/cms/admin
+- minio-s3-ui: http://minio-s3-console.localhost:40110
 
 ## Opening the minio-s3 web interface
-- Open http://minio-s3-console.pelican.local.tourmalinecore.internal:40110
+- Open http://minio-s3-console.localhost:40110
 - Enter login and password:
     - `login`: *admin*
     - `password`: *rootPassword*
 
 ## Opening the CMS admin panel web interface
-- Open http://pelican.local.tourmalinecore.internal:40110/cms/admin
+- Open http://localhost:40110/cms/admin
 - Enter login and password:
     - `email`: *admin@init-strapi-admin.strapi.io*
     - `password`: *admin*
@@ -107,9 +90,9 @@ helmfile cache cleanup && helmfile --environment local --namespace local -f depl
 ## Troubleshooting
 - OpenLens not showing any pods, deployments, etc.. Make sure the "Namespace" in view "Workloads" is set to "`local`" or "`All namespaces`"
 
-- cannot open http://pelican.local.tourmalinecore.internal/
+- cannot open http://localhost/
     ```
-    This site can’t be reached pelican.local.tourmalinecore.internal refused to connect.
+    This site can’t be reached localhost refused to connect.
     ```
     if you see this in your browser please try to open in Incognito Mode
 - cannot install pelican-ui chart
