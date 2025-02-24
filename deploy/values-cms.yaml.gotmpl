@@ -37,5 +37,3 @@ initContainers:
         mc policy set public myminio/pelican-local-env
         mc anonymous set download myminio/pelican-local-env
         mc policy myminio/pelican-local-env
-
-gitRef: {{ env "GIT_CMS_REF"| default "master" }}
