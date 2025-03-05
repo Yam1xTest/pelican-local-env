@@ -15,3 +15,8 @@ controller:
   # not needed in this setup
   admissionWebhooks:
     enabled: false	
+
+  config:
+    # https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/nginx-configuration/configmap.md#proxy-body-size
+    proxy-body-size: "30m" 
+
