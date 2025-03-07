@@ -17,7 +17,7 @@ spec:
               image: pgsql-backup:0.0.1
               env:
                 - name: PG_HOST
-                  value: 10.244.0.8
+                  value: 10.244.0.7
                 - name: PGPASSWORD
                   value: admin
                 - name: PG_USER
@@ -25,13 +25,11 @@ spec:
                 - name: PG_DATABASE
                   value: pelican_db
                 - name: AWS_ACCESS_KEY_ID
-                  value: iTXIKZ2BUSnkQTqpRVw2
+                  value: nVz4lm6SOE71eb7CuMvz
                 - name: AWS_SECRET_ACCESS_KEY
-                  value: 9BQtj9GYbWmw07vop7UzTED2YkWJmPkcNJVid2Pf
+                  value: 2Pb7e3yWYswJsM0qGvKZ10Lhq48bquICsB4kgEj8
                 - name: AWS_BUCKET_NAME
-                  value: pgsql-backup
+                  value: pelican-db-backup
                 - name: AWS_HOST
-                  value: http://10.244.0.9:9000
-                - name: AWS_PORT
-                  value: '40110'
+                  value: http://10.244.0.8:9000
               imagePullPolicy: Never
