@@ -1,5 +1,8 @@
 # Local Kubernetes Environment
 
+More info about the project and its related repos can be found here: 
+[pelican-documentation](https://github.com/TourmalineCore/pelican-documentation).
+
 ## Prerequisites
 
 1. Install Docker
