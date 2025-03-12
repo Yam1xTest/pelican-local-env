@@ -19,7 +19,10 @@ extraConfigMapEnvVars:
   AWS_ACCESS_KEY_ID: "admin"
   AWS_ACCESS_SECRET_KEY: "rootPassword"
   AWS_ENDPOINT: "http://minio-s3:9000"
-  AWS_PUBLIC_ENDPOINT: "http://minio-s3.localhost:40110/pelican-local-env"
+  # The internal domain minio-s3:9000 only works on the UI, but not on the CMS
+  AWS_PUBLIC_ENDPOINT: "http://minio-s3:9000/pelican-local-env"
+  # The public domain minio-s3.localhost:40110 only works on the CMS, but not on the UI
+  # AWS_PUBLIC_ENDPOINT: "http://minio-s3.localhost:40110/pelican-local-env"
   AWS_REGION: "us-east-1"
   AWS_BUCKET: "pelican-local-env"
 
