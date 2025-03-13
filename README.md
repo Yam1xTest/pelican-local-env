@@ -1,4 +1,4 @@
-# Локальна Kubernetes среда  
+# Локальная Kubernetes среда  
 
 Более подробную информацию о проекте и связанных с ним репозиториях можно найти здесь:
 [pelican-documentation](https://github.com/TourmalineCore/pelican-documentation).
