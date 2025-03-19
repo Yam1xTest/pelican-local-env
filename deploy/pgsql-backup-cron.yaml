@@ -17,19 +17,43 @@ spec:
               image: pgsql-backup:0.0.1
               env:
                 - name: PG_HOST
-                  value: 10.244.0.7
-                - name: PGPASSWORD
-                  value: admin
+                  valueFrom:
+                   secretKeyRef:
+                      name: pgsql-backup-secret
+                      key: PG_HOST
+                - name: PG_PASSWORD
+                  valueFrom:
+                   secretKeyRef:
+                      name: pgsql-backup-secret
+                      key: PG_PASSWORD
                 - name: PG_USER
-                  value: postgres
+                  valueFrom:
+                   secretKeyRef:
+                      name: pgsql-backup-secret
+                      key: PG_USER
                 - name: PG_DATABASE
-                  value: pelican_db
+                  valueFrom:
+                   secretKeyRef:
+                      name: pgsql-backup-secret
+                      key: PG_DATABASE
                 - name: AWS_ACCESS_KEY_ID
-                  value: nVz4lm6SOE71eb7CuMvz
+                  valueFrom:
+                   secretKeyRef:
+                      name: pgsql-backup-secret
+                      key: AWS_ACCESS_KEY_ID
                 - name: AWS_SECRET_ACCESS_KEY
-                  value: 2Pb7e3yWYswJsM0qGvKZ10Lhq48bquICsB4kgEj8
+                  valueFrom:
+                   secretKeyRef:
+                      name: pgsql-backup-secret
+                      key: AWS_SECRET_ACCESS_KEY
                 - name: AWS_BUCKET_NAME
-                  value: pelican-db-backup
+                  valueFrom:
+                   secretKeyRef:
+                      name: pgsql-backup-secret
+                      key: AWS_BUCKET_NAME
                 - name: AWS_HOST
-                  value: http://10.244.0.8:9000
+                  valueFrom:
+                   secretKeyRef:
+                      name: pgsql-backup-secret
+                      key: AWS_HOST
               imagePullPolicy: Never
