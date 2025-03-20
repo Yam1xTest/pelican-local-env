@@ -87,6 +87,7 @@ releases:
     needs: 
       - ingress-nginx
       - postgresql
+      - pelican-cms
     values:
       # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
       - git::https://github.com/TourmalineCore/pelican-db-backupper.git@/ci/values.yaml?ref=feature/pgsql-backup
