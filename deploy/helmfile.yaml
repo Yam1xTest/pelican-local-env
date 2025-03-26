@@ -74,3 +74,20 @@ releases:
       - git::https://github.com/TourmalineCore/pelican-cms.git@/ci/values.yaml?ref={{ env "PELICAN_CMS_BRANCH" | default "master" }}
       - values.yaml.gotmpl
       - values-cms.yaml.gotmpl
+
+  - name: pelican-s3-backupper
+    labels:
+      app: pelican-s3-backupper
+    wait: true
+    chart: bitnami/nginx
+    # after 15.3.5 our docker file or setup can no longer start, need to investigate what is wrong for the newer versions
+    version: 15.3.5
+    # it won't work anyway until ingress controller is created
+    # thus we wait for it to be ready first
+    needs: 
+      - ingress-nginx
+      - minio-s3
+      - pelican-cms
+    values:
+      # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
+      - git::https://github.com/TourmalineCore/pelican-s3-backupper.git@/ci/values.yaml?ref=feature/s3-backup
