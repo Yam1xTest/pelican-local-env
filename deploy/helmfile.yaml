@@ -85,10 +85,10 @@ releases:
     # it won't work anyway until ingress controller is created
     # thus we wait for it to be ready first
     needs: 
-      - ingress-nginx
       - postgresql
+    # pelican-cms is needed to ensure that backups aren't created before pelican-cms is deployed.
       - pelican-cms
     values:
       # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
-      - git::https://github.com/TourmalineCore/pelican-db-backupper.git@/ci/values.yaml?ref=feature/pgsql-backup
+      - git::https://github.com/TourmalineCore/pelican-db-backupper.git@/ci/values.yaml?ref={{ env "PELICAN_DB_BACKUPPER_BRANCH" | default "master" }}
       - values-pelican-db-backupper.yaml.gotmpl
