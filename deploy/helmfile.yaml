@@ -86,7 +86,7 @@ releases:
     # thus we wait for it to be ready first
     needs: 
       - postgresql
-    # pelican-cms is needed to ensure that backups aren't created before pelican-cms is deployed.
+      # pelican-cms is needed to ensure that backups aren't created before pelican-cms is deployed.
       - pelican-cms
     values:
       # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
