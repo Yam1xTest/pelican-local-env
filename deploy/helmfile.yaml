@@ -79,17 +79,9 @@ releases:
     labels:
       app: pelican-db-backupper
     wait: true
-    chart: bitnami/nginx
-    # after 15.3.5 our docker file or setup can no longer start, need to investigate what is wrong for the newer versions
-    version: 15.3.5
-    # it won't work anyway until ingress controller is created
-    # thus we wait for it to be ready first
-    needs: 
-      - postgresql
-      # pelican-cms is needed to ensure that backups aren't created before pelican-cms is deployed.
-      - pelican-cms
+    chart: ../pelican-db-backupper        
+    namespace: local                      
     values:
-      # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
-      - git::https://github.com/TourmalineCore/pelican-db-backupper.git@/ci/values.yaml?ref={{ env "PELICAN_DB_BACKUPPER_BRANCH" | default "master" }}
-      - values.yaml.gotmpl
-      - values-pelican-db-backupper.yaml.gotmpl
+    - "../pelican-db-backupper/values.yaml"           
+    - values.yaml.gotmpl
+    - values-pelican-db-backupper.yaml.gotmpl
