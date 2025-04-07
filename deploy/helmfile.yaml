@@ -12,82 +12,83 @@ environments:
       - environments/{{ .Environment.Name }}/values.yaml.gotmpl
 
 releases:
-  - name: ingress-nginx
-    labels:
-      app: ingress-nginx
-    wait: true
-    chart: ingress-nginx/ingress-nginx
-    version: 4.10.1
-    values:
-      - values-ingress-nginx.yaml.gotmpl
+#   - name: ingress-nginx
+#     labels:
+#       app: ingress-nginx
+#     wait: true
+#     chart: ingress-nginx/ingress-nginx
+#     version: 4.10.1
+#     values:
+#       - values-ingress-nginx.yaml.gotmpl
 
-  - name: postgresql
-    namespace: default
-    labels:
-      app: postgresql
-    wait: true
-    chart: bitnami/postgresql
-    version: 12.2.7
-    values:
-      - values-postgre.yaml.gotmpl
+#   - name: postgresql
+#     namespace: default
+#     labels:
+#       app: postgresql
+#     wait: true
+#     chart: bitnami/postgresql
+#     version: 12.2.7
+#     values:
+#       - values-postgre.yaml.gotmpl
 
-  - name: minio-s3
-    labels:
-      app: minio-s3
-    wait: true
-    chart: bitnami/minio
-    version: 14.8.5
-    values: 
-      - values-minio.yaml.gotmpl
+#   - name: minio-s3
+#     labels:
+#       app: minio-s3
+#     wait: true
+#     chart: bitnami/minio
+#     version: 14.8.5
+#     values: 
+#       - values-minio.yaml.gotmpl
 
-  - name: pelican
-    labels:
-      app: pelican
-    wait: true
-    chart: bitnami/nginx
-    # after 15.3.5 our docker file or setup can no longer start, need to investigate what is wrong for the newer versions
-    version: 15.3.5
-    # it won't work anyway until ingress controller is created
-    # thus we wait for it to be ready first
-    needs: 
-      - ingress-nginx
-    values:
-      # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
-      - git::https://github.com/TourmalineCore/pelican-ui.git@/ci/values.yaml?ref=master
-      - values.yaml.gotmpl
-      - values-ui.yaml.gotmpl
+#   - name: pelican
+#     labels:
+#       app: pelican
+#     wait: true
+#     chart: bitnami/nginx
+#     # after 15.3.5 our docker file or setup can no longer start, need to investigate what is wrong for the newer versions
+#     version: 15.3.5
+#     # it won't work anyway until ingress controller is created
+#     # thus we wait for it to be ready first
+#     needs: 
+#       - ingress-nginx
+#     values:
+#       # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
+#       - git::https://github.com/TourmalineCore/pelican-ui.git@/ci/values.yaml?ref=master
+#       - values.yaml.gotmpl
+#       - values-ui.yaml.gotmpl
 
-  - name: pelican-cms
-    labels:
-      app: pelican-cms
-    wait: true
-    chart: bitnami/nginx
-    # after 15.3.5 our docker file or setup can no longer start, need to investigate what is wrong for the newer versions
-    version: 15.3.5
-    # it won't work anyway until ingress controller is created
-    # thus we wait for it to be ready first
-    needs: 
-      - ingress-nginx
-      - postgresql
-    values:
-      # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
-      - git::https://github.com/TourmalineCore/pelican-cms.git@/ci/values.yaml?ref={{ env "PELICAN_CMS_BRANCH" | default "master" }}
-      - values.yaml.gotmpl
-      - values-cms.yaml.gotmpl
+#   - name: pelican-cms
+#     labels:
+#       app: pelican-cms
+#     wait: true
+#     chart: bitnami/nginx
+#     # after 15.3.5 our docker file or setup can no longer start, need to investigate what is wrong for the newer versions
+#     version: 15.3.5
+#     # it won't work anyway until ingress controller is created
+#     # thus we wait for it to be ready first
+#     needs: 
+#       - ingress-nginx
+#       - postgresql
+#     values:
+#       # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
+#       - git::https://github.com/TourmalineCore/pelican-cms.git@/ci/values.yaml?ref={{ env "PELICAN_CMS_BRANCH" | default "master" }}
+#       - values.yaml.gotmpl
+#       - values-cms.yaml.gotmpl
 
   - name: pelican-s3-backupper
     labels:
       app: pelican-s3-backupper
     wait: true
-    chart: bitnami/nginx
+    chart: ../pelican-s3-backupper
     # after 15.3.5 our docker file or setup can no longer start, need to investigate what is wrong for the newer versions
-    version: 15.3.5
     # it won't work anyway until ingress controller is created
     # thus we wait for it to be ready first
     needs: 
-      - ingress-nginx
-      - minio-s3
-      - pelican-cms
+      # - ingress-nginx
+      # - minio-s3
+      # - pelican-cms
     values:
       # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
-      - git::https://github.com/TourmalineCore/pelican-s3-backupper.git@/ci/values.yaml?ref=feature/s3-backup
+      - ../pelican-s3-backupper/values.yaml
+      - values-s3-backupper.yaml.gotmpl
+      
