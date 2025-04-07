@@ -5,6 +5,8 @@ repositories:
     url: https://mirror.yandex.ru/helm/charts.bitnami.com
   - name: ingress-nginx
     url: https://kubernetes.github.io/ingress-nginx
+  - name: pelican-s3-backupper
+    url: git+https://github.com/TourmalineCore/pelican-s3-backupper.git?ref=feature/custom-helm-chart    
 
 environments:
   local:
@@ -79,7 +81,7 @@ releases:
     labels:
       app: pelican-s3-backupper
     wait: true
-    chart: ../pelican-s3-backupper
+    chart: pelican-s3-backupper/pelican-s3-backupper
     # after 15.3.5 our docker file or setup can no longer start, need to investigate what is wrong for the newer versions
     # it won't work anyway until ingress controller is created
     # thus we wait for it to be ready first
@@ -89,6 +91,5 @@ releases:
       # - pelican-cms
     values:
       # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
-      - ../pelican-s3-backupper/values.yaml
-      - values-s3-backupper.yaml.gotmpl
-      
+      - git::https://github.com/TourmalineCore/pelican-s3-backupper.git@/values.yaml?ref=feature/custom-helm-chart
+      - values-pelican-s3-backupper.yaml.gotmpl
