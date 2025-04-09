@@ -1,6 +1,8 @@
 # Pelican local env, AGPL-3.0 license
 
 extraConfigMapEnvVars:
+  IMAGE_TAG: "sha-e10de6d121d3ef4ebeb89afbd9f159b3e83a444d"
+
   PG_HOST: "postgresql"
   PGPASSWORD: "admin"
   PG_USER: "postgres"
@@ -10,4 +12,4 @@ extraConfigMapEnvVars:
   AWS_BUCKET_NAME: "pelican-db-backup"
   AWS_HOST: "http://minio-s3:9000"
   # Make backups every 2 minutes. 
-  SCHEDULE: "*/2 * * * *"
+  SCHEDULE: "*/1 * * * *"
