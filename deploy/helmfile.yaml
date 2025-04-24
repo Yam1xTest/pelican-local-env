@@ -40,9 +40,9 @@ releases:
     values: 
       - values-minio.yaml.gotmpl
 
-  - name: pelican
+  - name: pelican-ui
     labels:
-      app: pelican
+      app: pelican-ui
     wait: true
     chart: bitnami/nginx
     # after 15.3.5 our docker file or setup can no longer start, need to investigate what is wrong for the newer versions
