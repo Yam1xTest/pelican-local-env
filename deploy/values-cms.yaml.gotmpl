@@ -26,6 +26,7 @@ extraConfigMapEnvVars:
   AWS_REGION: "us-east-1"
   AWS_BUCKET: "pelican-local-env"
   PREVIEW_SECRET: "secret"
+  FRONTEND_URL: "http://localhost:40110"
 
 initContainers:
   - name: create-bucket
