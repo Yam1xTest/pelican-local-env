@@ -1,104 +1,106 @@
-# Local Kubernetes Environment
+# Локальная Kubernetes среда  
 
-More info about the project and its related repos can be found here: 
+Более подробную информацию о проекте и связанных с ним репозиториях можно найти здесь:
 [pelican-documentation](https://github.com/TourmalineCore/pelican-documentation).
 
-## Prerequisites
+## Подготовка перед запуском
 
-1. Install Docker
-2. Install Visual Studio Code
-3. Install Visual Studio Code [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) Extension
-3. Install [Lens (commercial)](https://k8slens.dev/) or [OpenLens (open source)](https://github.com/MuhammedKalkan/OpenLens/releases)
+1. Установите Docker
+2. Установите Visual Studio Code
+3. Уставновите плагин Visual Studio Code [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+3. Установите [Lens (commercial)](https://k8slens.dev/) или [OpenLens (open source)](https://github.com/MuhammedKalkan/OpenLens/releases)
 
 ## VSCode Dev Container
 
-Open this repo's folder in VSCode, it might immediately propose you to re-open it in a Dev Container or you can click on `Remote Explorer`, find plus button and choose the `Open Current Folder in Container` option and wait when it is ready.
+Откройте папку этого репозитория в VSCode, он может сразу предложить вам повторно открыть его в Dev container, или вы можете нажать `Remote Explorer`, найти кнопку плюс и выбрать опцию `Open Current Folder in Container` и подождать пока он будет готов.
 
-When your Dev Container is ready, the VS Code window will be re-opened. Open a new terminal in this Dev Container which will be executing the commands under this prepared Linux container where we have already pre-installed and pre-configured:
-- Docker Outside of Docker aka Docker from Docker to be able to use host's docker daemon from inside the container 
-- [kind](https://kind.sigs.k8s.io/) to create a k8s cluster locally in Docker
-- [kubectl](https://kubernetes.io/docs/reference/kubectl/) to call k8s cluster from CLI (bypassing Lens)
-- [helm, helmfile](https://github.com/helmfile/helmfile) to deploy all services [helm](https://helm.sh/) charts at once to the local k8s cluster created with `kind`
-- [helm-diff](https://github.com/databus23/helm-diff) show nicely what has changed since the last `helmfile apply`
+Когда Dev Container будет готов, VsCode снова откроется. Откройте новый терминал, который будет выполнять команды в подготовленном Linux-контейнере, который мы уже предварительно установили и настроили:
 
->Note: You **don't** need to install these packages in your OS, these are part of the Dev Container already. Thus, it is a clean way to run the stack for any host OS.
+- Docker Outside of Docker или Docker из Docker, чтобы иметь возможность использовать docker демон хоста изнутри контейнера
+- [kind](https://kind.sigs.k8s.io/) для создания локального кластера k8s в Docker
+- [kubectl](https://kubernetes.io/docs/reference/kubectl/) для вызова кластера k8s из CLI (в обход Lens)
+- [helm, helmfile](https://github.com/helmfile/helmfile) для одновременного развертывания всех сервисов [helm](https://helm.sh/)  в локальном кластере k8s, созданном с помощью `kind`
+- [helm-diff](https://github.com/databus23/helm-diff) наглядно показывает, что изменилось с момента последнего применения `helmfile apply`
 
-## Manage Local k8s Cluster
+>Примечание: Вам не нужно устанавливать эти пакеты в свою ОС, они уже являются частью Dev container. Таким образом, это простой способ запустить приложение на любой ОС.
 
-### Cluster Creation
+## Управление локальным кластером k8s
 
-To create a new cluster where you will work execute the following command **once**:
+### Создание кластера
+
+Чтобы создать новый кластер, в котором вы будете работать, выполните следующую команду **один раз**:
 
 ```bash
 kind create cluster --name pelican --config kind-local-config.yaml --kubeconfig ./.pelican-cluster-kubeconfig
 ```
 
-### Cluster Removal
+### Удаление кластера
 
-To delete the previously created cluster by any reason execute the following command:
+Чтобы удалить ранее созданный кластер, выполните следующую команду:
 
 ```bash
 kind delete cluster --name pelican
 ```
 
-### Cluster Connection
+### Подключение к кластеру
+Затем у вас должна быть возможность получить созданную конфигурацию кластера k8s здесь, в корне репозитория 
+`.pelican-cluster-kubeconfig`, и использовать ее в `Lens` для подключения к кластеру.
 
-Then you should be able to go and grap the created k8s cluster config here in the root of the repo `.pelican-cluster-kubeconfig` and use it in `Lens` to connect to the cluster.
+В `Lens` вы можете перейти в `File` -> `Add Cluster`, поместить туда скопированное содержимое файла `config`.
+После чего вы сможете подключиться к нему.
 
-In `Lens` you can go to `File` -> `Add Cluster` and put there the copied `config` file content and create it.
-Then you should be able to connect to it.
+### Развертывание в кластере
 
-### Deployment to Cluster
-
-To deploy the stack to the cluster at the first time or re-deploy it after a change in charts or their configuration execute the following command:
+Чтобы развернуть приложение в кластере в первый раз или для повторного развертывания после изменения helm-чартов или их конфигурации, выполните следующую команду:
 
 ```bash
 helmfile cache cleanup && helmfile --environment local --namespace local -f deploy/helmfile.yaml apply
 ```
 
-When the command is complete and all k8s pods are running inside **`local`** namespace you should be able to navigate to http://localhost:40110/ in your browser and see `Hello World`.
+Когда команда будет выполнена и все модули k8s будут запущены во вкладке **`local`**, вы сможете перейти по ссылке http://localhost:40110/ в вашем браузере и увидеть `Hello World`.
 
->Note: at the first time this really takes a while.
+>Примечание: в первый раз это можеть занять довольно большое количество времени.
 
->Note: `helmfile cache cleanup` is needed to force to re-fetch remote values.yaml files from git repos. Otherwise it will never invalidate them. Links: https://github.com/roboll/helmfile/issues/720#issuecomment-1516613493 and https://helmfile.readthedocs.io/en/latest/#cache.
+>Примечание: `helmfile cache cleanup` необходима для принудительного повторного извлечения values.yaml файлов из репозиториев git. В противном случае это никогда не приведет к их аннулированию.
+Ссылки: https://github.com/roboll/helmfile/issues/720#issuecomment-1516613493 и https://helmfile.readthedocs.io/en/latest/#cache.
 
->Note: if one of your services version was updated e.g. a newer version was published to `pelican-ui:latest` you won't see the changes executing `helmfile apply` command. Instead you need to remove the respective service Pod that it can be re-created by its Deployment and fetch the latest docker image. 
+>Примечание: если была обновлена версия одного из ваших сервисов, например, была опубликована более новая версия `pelican-ui:latest`, вы не увидите изменений, выполнив команду `helmfile apply`. Вместо этого вам нужно удалить соответствующий служебный pod, в случае `pelican-ui` это `pelican-nginx`. После чего он повторно автоматически развернется и получит последнии измненения.
 
-### Debugging Helm Charts
+### Отладка Helm-чартов
 
-To see how all charts manifest are going to look like before apply you can execute the following command:
+Чтобы увидеть, как будут выглядеть все чарт-манифесты перед применением, вы можете выполнить следующую команду:
 
 ```bash
 helmfile cache cleanup && helmfile --environment local --namespace local -f deploy/helmfile.yaml template
 ```
 
-## Services URLs
+## URLs всех сервисов
 
 - ui: http://localhost:40110
-- api: http://localhost:40110/cms/admin
+- cms: http://localhost:40110/cms/admin
 - minio-s3-ui: http://minio-s3-console.localhost:40110
 
-## Opening the minio-s3 web interface
-- Open http://minio-s3-console.localhost:40110
-- Enter login and password:
+## Открытие интерфейса minio-s3
+- Открыть http://minio-s3-console.localhost:40110
+- Ввести логин и пароль:
     - `login`: *admin*
     - `password`: *rootPassword*
 
-## Opening the CMS admin panel web interface
-- Open http://localhost:40110/cms/admin
-- Enter login and password:
+## Открытие интерфейса админской панели CMS
+- Открыть http://localhost:40110/cms/admin
+- Ввести логин и пароль:
     - `email`: *admin@init-strapi-admin.strapi.io*
     - `password`: *admin*
 
-## Troubleshooting
-- OpenLens not showing any pods, deployments, etc.. Make sure the "Namespace" in view "Workloads" is set to "`local`" or "`All namespaces`"
+## Возможные проблемы
+- OpenLens не показывает никаких развернутых модулей. Убедитесь, что для параметра "Namespace" в поле "Workloads" задано значение "`local`" или "`All namespaces`".
 
-- cannot open http://localhost/
+- не открывается http://localhost:40110/
     ```
-    This site can’t be reached localhost refused to connect.
+    Невозможно получить доступ до сайта, локальный хост отказался подключаться.
     ```
-    if you see this in your browser please try to open in Incognito Mode
-- cannot install pelican-ui chart
+    Если вы видите это в своем браузере, пожалуйста, попробуйте открыть сайт в режиме инкогнито.
+- не устанавливается чарт pelican-ui
     ```
     COMBINED OUTPUT:
     Release "pelican-ui" does not exist. Installing it now.
@@ -106,14 +108,14 @@ helmfile cache cleanup && helmfile --environment local --namespace local -f depl
     coalesce.go:286: warning: cannot overwrite table with non table for nginx.ingress.annotations (map[])
     Error: context deadline exceeded
     ```
-    if you see this after you try to run `helmfile apply` command, simply retry `helmfile apply` command.
+    Eсли вы увидите это после попытки выполнить команду `helmfile apply`, просто повторите попытку `helmfile apply`.
 
-- in case of any other weird issue:
-    1. Remove the `pelican-control-plane` docker container.
-    2. Remove the cluster from Lens.
-    3. Re-try over starting from `kind create` command.
+- в случае возникновения какой-либо другой странной проблемы:
+    1. Удалите docker container под названием `pelican-control-plane`.
+    2. Удалите кластер из LensRemove the cluster from Lens.
+    3. Попробуйте выполнить все команды из инструкции, начиная с `kind create`.
 
-## Useful Refs used to setup repo
+## Полезные ссылки, используемые для настройки репозитория
 
 - https://shisho.dev/blog/posts/docker-in-docker/
 - https://devopscube.com/run-docker-in-docker/

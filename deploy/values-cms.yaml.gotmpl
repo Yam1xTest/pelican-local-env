@@ -25,6 +25,7 @@ extraConfigMapEnvVars:
   # AWS_PUBLIC_ENDPOINT: "http://minio-s3.localhost:40110/pelican-local-env"
   AWS_REGION: "us-east-1"
   AWS_BUCKET: "pelican-local-env"
+  PREVIEW_SECRET: "secret"
 
 initContainers:
   - name: create-bucket
