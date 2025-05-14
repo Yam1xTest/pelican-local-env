@@ -1,11 +1,18 @@
 # Pelican local env, AGPL-3.0 license
+image:
+  tag: "sha-67dcc2d029a07e3693d8e658b38f15c7935a0452"
 
 extraConfigMapEnvVars:
-  AWS_ACCESS_KEY_ID_UPLOAD: "secret"
-  AWS_SECRET_ACCESS_KEY_UPLOAD: "secret"
-  AWS_HOST_UPLOAD: "url"
-  AWS_BUCKET_NAME_UPLOAD: "bucket"
-  AWS_ACCESS_KEY_ID_DOWNLOAD: "admin"
-  AWS_SECRET_ACCESS_KEY_DOWNLOAD: "rootPassword"
-  AWS_HOST_DOWNLOAD: "http://minio-s3:9000"
-  AWS_BUCKET_NAME_DOWNLOAD: "pelican-local-env"
+  PELICAN_FILENAME_PREFIX: "pelican-local-env-s3"
+  # If you don't have subfolder or want to create a backup of the entire bucket, then leave SOURCE_AWS_BUCKET_SUBFOLDER_NAME with empty quotes
+  SOURCE_AWS_BUCKET_SUBFOLDER_NAME: ""
+  SOURCE_AWS_ACCESS_KEY_ID: "admin"
+  SOURCE_AWS_SECRET_ACCESS_KEY: "rootPassword"
+  SOURCE_AWS_HOST: "http://minio-s3:9000"
+  SOURCE_AWS_BUCKET_NAME: "pelican-local-env"
+  DESTINATION_AWS_ACCESS_KEY_ID: "admin"
+  DESTINATION_AWS_SECRET_ACCESS_KEY: "rootPassword"
+  DESTINATION_AWS_HOST: "http://minio-s3:9000"
+  DESTINATION_AWS_BUCKET_NAME: "pelican-s3-backups"
+  # Make backups every 1 minute. 
+  SCHEDULE: "*/1 * * * *"
