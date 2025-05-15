@@ -33,8 +33,8 @@ jobs:
     # for the sake of simlicity it is kept like this here
     # however, in production with longer pipelines: more services and more tests it will most likely start causing issues
     # creation of the cluster and deployment to it should be in the same step as the e2e tests running 
-    - name: Playwright Run Against Pelican UI
-      uses: microsoft/playwright-github-action@v1.5.6
+    - name: Cypress Run Against Pelican UI
+      uses: cypress-io/github-action@v6
       with:
         config-file: playwright.config.ts
 
@@ -45,7 +45,7 @@ jobs:
       with:
         repository: TourmalineCore/pelican-cms
 
-    - name: Playwright Run Against Pelican CMS
-      uses: microsoft/playwright-github-action@v1.5.6
+    - name: Cypress Run Against Pelican CMS
+      uses: cypress-io/github-action@v6
       with:
         config-file: playwright.config.ts
