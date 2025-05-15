@@ -62,12 +62,13 @@ jobs:
       run: |
         curl -L https://github.com/karatelabs/karate/releases/download/v1.5.1/karate-1.5.1.jar -o karate.jar
        
-    - name: Karate Run Against Pelican CMS
+    - name: Karate Run Against Accounts API
       run: |
         java -jar karate.jar .
       env:
-        AUTH_API_ROOT_URL: "http://localhost:30090/api/auth"
-        API_ROOT_URL: "http://localhost:30090/api"
-        AUTH_LOGIN: "ceo@tourmalinecore.com"
-        AUTH_PASSWORD: "cEoPa$$wo1d"
+        AUTH_CMS_ROOT_URL: "http://localhost:40110/cms/admin/auth/login"
+        CMS_ROOT_URL: "http://localhost:40110/cms"
+        AUTH_LOGIN: "admin@init-strapi-admin.strapi.io"
+        AUTH_PASSWORD: "admin"
         SHOULD_USE_FAKE_EXTERNAL_DEPENDENCIES: "false"
+  
