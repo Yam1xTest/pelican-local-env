@@ -22,7 +22,7 @@ jobs:
         # we don't need to push docker image that was built using our Dev Container
         push: never
 
-    # CYPRESS UI TESTS
+    # PLAYWRIGHT UI TESTS
 
     - name: Checkout Pelican UI
       uses: actions/checkout@v4
@@ -33,19 +33,19 @@ jobs:
     # for the sake of simlicity it is kept like this here
     # however, in production with longer pipelines: more services and more tests it will most likely start causing issues
     # creation of the cluster and deployment to it should be in the same step as the e2e tests running 
-    - name: Cypress Run Against Pelican UI
-      uses: cypress-io/github-action@v6
+    - name: Playwright Run Against Pelican UI
+      uses: microsoft/playwright-github-action@v1.5.6
       with:
         config-file: playwright.config.ts
 
-    # CYPRESS CMS TESTS
+    # PLAYWRIGHT CMS TESTS
 
     - name: Checkout Pelican CMS
       uses: actions/checkout@v4
       with:
         repository: TourmalineCore/pelican-cms
 
-    - name: Cypress Run Against Pelican CMS
-      uses: cypress-io/github-action@v6
+    - name: Playwright Run Against Pelican CMS
+      uses: microsoft/playwright-github-action@v1.5.6
       with:
         config-file: playwright.config.ts
