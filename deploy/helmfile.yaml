@@ -81,9 +81,10 @@ releases:
     labels:
       app: pelican-db-backupper
     wait: true
-    chart: pelican-db-backupper/pelican-db-backupper
+    chart: ../pelican-db-backupper
     needs: 
     values:
       # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
-      - git::https://github.com/TourmalineCore/pelican-db-backupper.git@/values.yaml?ref=feature/custom-helm-chart
+      - git::https://github.com/TourmalineCore/pelican-db-backupper.git@/ci/values.yaml?ref=feature/custom-helm-chart
       - values-pelican-db-backupper.yaml.gotmpl
+
