@@ -7,7 +7,12 @@ on:
 
 jobs:
   run-e2e-against-local-env:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [20.18.0]
 
     steps:
     - name: Checkout Local Env
@@ -22,6 +27,64 @@ jobs:
         # we don't need to push docker image that was built using our Dev Container
         push: never
 
+
+    # PLAYWRIGHT CMS TESTS
+
+    - name: Checkout Pelican CMS
+      uses: actions/checkout@v4
+      with:
+        repository: TourmalineCore/pelican-cms
+
+    - name: Cache node modules
+        id: cache-nodemodules
+        uses: actions/cache@v4
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+  
+    # let's cache the binaries of installed browsers that we don't re-install them every time from scratch
+    - name: Cache playwright browsers
+      id: cache-playwrightbrowsers
+      uses: actions/cache@v4
+      env:
+        cache-name: cache-playwright-browsers
+      with:
+        # caching browsers binaries
+        # this path is taken from here https://playwright.dev/docs/browsers#managing-browser-binaries
+        path: ~/.cache/ms-playwright
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install dependencies
+      if: steps.cache-nodemodules.outputs.cache-hit != 'true'
+      run: npm ci
+
+    - name: Install Playwright Browsers
+      if: steps.cache-playwrightbrowsers.outputs.cache-hit != 'true'
+      run: npx playwright install chromium --with-deps
+
+    - name: Playwright run
+      run: npx playwright test --reporter=html 
+  
+      env:
+        FRONTEND_URL: http://localhost:40110 
+        SERVER_URL: 'http://localhost:40110/cms'
+
+    - name: Upload HTML report
+      uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: html-report--attempt-${{ github.run_attempt }}
+        path: playwright-report
+        retention-days: 7
+        
+        
     # PLAYWRIGHT UI TESTS
 
     - name: Checkout Pelican UI
@@ -34,18 +97,6 @@ jobs:
     # however, in production with longer pipelines: more services and more tests it will most likely start causing issues
     # creation of the cluster and deployment to it should be in the same step as the e2e tests running 
     - name: Playwright Run Against Pelican UI
-      uses: microsoft/playwright-github-action@v1.5.6
-      with:
-        config-file: playwright.config.ts
-
-    # PLAYWRIGHT CMS TESTS
-
-    - name: Checkout Pelican CMS
-      uses: actions/checkout@v4
-      with:
-        repository: TourmalineCore/pelican-cms
-
-    - name: Playwright Run Against Pelican CMS
       uses: microsoft/playwright-github-action@v1.5.6
       with:
         config-file: playwright.config.ts
