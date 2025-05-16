@@ -101,7 +101,7 @@ jobs:
       run: npx playwright test --reporter=html 
   
       env:
-        API_URL: "http://pelican-cms-nginx:40110/api"
+        FRONTEND_URL: http://localhost:40110
 
     - name: Upload HTML report
       uses: actions/upload-artifact@v4
