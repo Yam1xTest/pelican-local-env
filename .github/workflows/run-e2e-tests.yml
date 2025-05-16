@@ -96,12 +96,12 @@ jobs:
       if: steps.cache-nodemodules.outputs.cache-hit != 'true'
       run: npm ci
 
-
     - name: Playwright run for UI
-      run: npx playwright test --reporter=html 
+      run: npx playwright test --reporter=html --config=playwright.e2e.config.ts
   
       env:
-        FRONTEND_URL: http://localhost:40110
+        FRONTEND_URL: http://localhost:40110 
+        API_URL: 'http://localhost:40110/cms/api'
 
     - name: Upload HTML report
       uses: actions/upload-artifact@v4
