@@ -96,6 +96,10 @@ jobs:
       if: steps.cache-nodemodules.outputs.cache-hit != 'true'
       run: npm ci
 
+    - name: Install Playwright Browsers
+      if: steps.cache-playwrightbrowsers.outputs.cache-hit != 'true'
+      run: npx playwright install chromium --with-deps
+
     - name: Playwright run for UI
       run: npx playwright test --reporter=html --config=playwright.e2e.config.ts
   
