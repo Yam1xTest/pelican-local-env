@@ -36,13 +36,13 @@ jobs:
         repository: TourmalineCore/pelican-cms
 
     - name: Cache node modules
-        id: cache-nodemodules
-        uses: actions/cache@v4
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+      id: cache-nodemodules
+      uses: actions/cache@v4
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
   
     # let's cache the binaries of installed browsers that we don't re-install them every time from scratch
     - name: Cache playwright browsers
