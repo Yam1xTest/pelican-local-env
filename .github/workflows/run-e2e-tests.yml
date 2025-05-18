@@ -30,9 +30,8 @@ jobs:
       with:
         repository: TourmalineCore/pelican-cms
 
-    # - name: Install dependencies for CMS
-    #   if: steps.cache-nodemodules.outputs.cache-hit != 'true'
-    #   run: npm ci
+    - name: WHere am I
+      run: ls -a
 
     # - name: Install Playwright Browsers
     #   if: steps.cache-playwrightbrowsers.outputs.cache-hit != 'true'
