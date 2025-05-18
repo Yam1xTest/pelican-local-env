@@ -25,10 +25,10 @@ jobs:
 
     # PLAYWRIGHT CMS TESTS
 
-    # - name: Checkout Pelican CMS
-    #   uses: actions/checkout@v4
-    #   with:
-    #     repository: TourmalineCore/pelican-cms
+    - name: Checkout Pelican CMS
+      uses: actions/checkout@v4
+      with:
+        repository: TourmalineCore/pelican-cms
 
     # - name: Install dependencies for CMS
     #   if: steps.cache-nodemodules.outputs.cache-hit != 'true'
