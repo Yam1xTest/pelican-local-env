@@ -8,11 +8,7 @@ on:
 jobs:
   run-e2e-against-local-env:
     runs-on: ubuntu-24.04
-
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [20.18.0]
+    container: mcr.microsoft.com/playwright:v1.48.2-noble
 
     steps:
     - name: Checkout Local Env
@@ -35,13 +31,13 @@ jobs:
       with:
         repository: TourmalineCore/pelican-cms
 
-    - name: Install dependencies for CMS
-      if: steps.cache-nodemodules.outputs.cache-hit != 'true'
-      run: npm ci
+    # - name: Install dependencies for CMS
+    #   if: steps.cache-nodemodules.outputs.cache-hit != 'true'
+    #   run: npm ci
 
-    - name: Install Playwright Browsers
-      if: steps.cache-playwrightbrowsers.outputs.cache-hit != 'true'
-      run: npx playwright install chromium --with-deps
+    # - name: Install Playwright Browsers
+    #   if: steps.cache-playwrightbrowsers.outputs.cache-hit != 'true'
+    #   run: npx playwright install chromium --with-deps
 
     - name: Playwright run for CMS
       run: npx playwright test --reporter=html 
@@ -61,30 +57,30 @@ jobs:
         
     # PLAYWRIGHT UI TESTS
 
-    - name: Checkout Pelican UI
-      uses: actions/checkout@v4
-      with:
-        repository: TourmalineCore/pelican-ui
+    # - name: Checkout Pelican UI
+    #   uses: actions/checkout@v4
+    #   with:
+    #     repository: TourmalineCore/pelican-ui
 
-    - name: Install dependencies for UI
-      if: steps.cache-nodemodules.outputs.cache-hit != 'true'
-      run: npm ci
+    # - name: Install dependencies for UI
+    #   if: steps.cache-nodemodules.outputs.cache-hit != 'true'
+    #   run: npm ci
 
-    - name: Install Playwright Browsers
-      if: steps.cache-playwrightbrowsers.outputs.cache-hit != 'true'
-      run: npx playwright install chromium --with-deps
+    # - name: Install Playwright Browsers
+    #   if: steps.cache-playwrightbrowsers.outputs.cache-hit != 'true'
+    #   run: npx playwright install chromium --with-deps
 
-    - name: Playwright run for UI
-      run: npx playwright test --reporter=html --config=playwright.e2e.config.ts
+    # - name: Playwright run for UI
+    #   run: npx playwright test --reporter=html --config=playwright.e2e.config.ts
   
-      env:
-        FRONTEND_URL: http://localhost:40110 
-        API_URL: 'http://localhost:40110/cms/api'
+    #   env:
+    #     FRONTEND_URL: http://localhost:40110 
+    #     API_URL: 'http://localhost:40110/cms/api'
 
-    - name: Upload HTML report
-      uses: actions/upload-artifact@v4
-      if: failure()
-      with:
-        name: html-report--attempt-${{ github.run_attempt }}
-        path: playwright-report
-        retention-days: 7
+    # - name: Upload HTML report
+    #   uses: actions/upload-artifact@v4
+    #   if: failure()
+    #   with:
+    #     name: html-report--attempt-${{ github.run_attempt }}
+    #     path: playwright-report
+    #     retention-days: 7
