@@ -30,9 +30,6 @@ jobs:
       with:
         repository: TourmalineCore/pelican-cms
 
-    - name: WHere am I
-      run: cd .. && ls -a
-
     # - name: Install Playwright Browsers
     #   if: steps.cache-playwrightbrowsers.outputs.cache-hit != 'true'
     #   run: npx playwright install chromium --with-deps
@@ -40,7 +37,7 @@ jobs:
     - name: Playwright run for CMS
       uses: devcontainers/ci@v0.3
       with:
-        configFile: ../pelican-local-env/.devcontainer/e2e-tests/devcontainer.json
+        configFile: ./.devcontainer/e2e-tests-in-pr/devcontainer.json
         runCmd: |
           npx playwright test --reporter=html
         # we don't need to push docker image that was built using our Dev Container
