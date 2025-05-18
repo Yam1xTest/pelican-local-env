@@ -31,7 +31,7 @@ jobs:
         repository: TourmalineCore/pelican-cms
 
     - name: WHere am I
-      run: ls -a
+      run: cd .. && ls -a
 
     # - name: Install Playwright Browsers
     #   if: steps.cache-playwrightbrowsers.outputs.cache-hit != 'true'
