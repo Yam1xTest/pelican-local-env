@@ -43,9 +43,9 @@ jobs:
           npx playwright test --reporter=html
         # we don't need to push docker image that was built using our Dev Container
         push: never
-        env:
-          FRONTEND_URL: http://localhost:40110 
-          SERVER_URL: 'http://localhost:40110/cms'
+        env: |
+          FRONTEND_URL=http://localhost:40110
+          SERVER_URL=http://localhost:40110/cms
 
     - name: Upload HTML report
       uses: actions/upload-artifact@v4
