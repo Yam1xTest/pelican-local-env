@@ -41,7 +41,7 @@ jobs:
     - name: Playwright run for CMS
       uses: devcontainers/ci@v0.3
       with:
-        configFile: ./.devcontainer/devcontainer-e2e-tests.json
+        configFile: ../.devcontainer/devcontainer-e2e-tests.json
         runCmd: |
           npx playwright test --reporter=html
         # we don't need to push docker image that was built using our Dev Container
