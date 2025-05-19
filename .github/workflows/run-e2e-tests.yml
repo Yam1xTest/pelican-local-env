@@ -51,14 +51,11 @@ jobs:
         path: playwright-report
         retention-days: 7
 
-    # for fix Error: EACCES: permission denied, rmdir '/home/runner/work/pelican-local-env/pelican-local-env/node_modules/.bin'
-    # https://github.com/actions/checkout/issues/1720
-
-    - name: Increasing privileges
+    - name: Cleanup workspace
       run: |
-        sudo chmod -R u+w /home/runner/work/pelican-local-env/pelican-local-env/node_modules/.bin
+        sudo chown -R runner:runner /home/runner/work/pelican-local-env/pelican-local-env
+        rm -rf /home/runner/work/pelican-local-env/pelican-local-env/*
 
-        
     # PLAYWRIGHT UI TESTS
 
     - name: Checkout Pelican UI
