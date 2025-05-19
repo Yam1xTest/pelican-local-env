@@ -51,10 +51,6 @@ jobs:
         path: playwright-report
         retention-days: 7
 
-    - name: Cleanup workspace
-      run: |
-        sudo chown -R runner:runner /home/runner/work/pelican-local-env/pelican-local-env
-        rm -rf /home/runner/work/pelican-local-env/pelican-local-env/node_modules/.bin
 
     # PLAYWRIGHT UI TESTS
 
