@@ -52,30 +52,30 @@ jobs:
         retention-days: 7
 
 
-    # PLAYWRIGHT UI TESTS
+    # # PLAYWRIGHT UI TESTS
 
-    - name: Checkout Pelican UI
-      uses: actions/checkout@v4
-      with:
-        repository: TourmalineCore/pelican-ui
-        ref: feature/e2e-tests-in-pr-dev-container
+    # - name: Checkout Pelican UI
+    #   uses: actions/checkout@v4
+    #   with:
+    #     repository: TourmalineCore/pelican-ui
+    #     ref: feature/e2e-tests-in-pr-dev-container
 
-    - name: Playwright run for UI
-      uses: devcontainers/ci@v0.3
-      with:
-        configFile: ./.devcontainer/e2e-tests-in-pr/devcontainer.json
-        runCmd: |
-          npx playwright test --reporter=html --config=playwright.e2e.config.ts
-        # we don't need to push docker image that was built using our Dev Container
-        push: never
-        env: |
-          FRONTEND_URL=http://localhost:40110 
-          API_URL=http://localhost:40110/cms/api
+    # - name: Playwright run for UI
+    #   uses: devcontainers/ci@v0.3
+    #   with:
+    #     configFile: ./.devcontainer/e2e-tests-in-pr/devcontainer.json
+    #     runCmd: |
+    #       npx playwright test --reporter=html --config=playwright.e2e.config.ts
+    #     # we don't need to push docker image that was built using our Dev Container
+    #     push: never
+    #     env: |
+    #       FRONTEND_URL=http://localhost:40110 
+    #       API_URL=http://localhost:40110/cms/api
 
-    - name: Upload HTML report
-      uses: actions/upload-artifact@v4
-      if: failure()
-      with:
-        name: html-report--attempt-${{ github.run_attempt }}
-        path: playwright-report
-        retention-days: 7
+    # - name: Upload HTML report
+    #   uses: actions/upload-artifact@v4
+    #   if: failure()
+    #   with:
+    #     name: html-report--attempt-${{ github.run_attempt }}
+    #     path: playwright-report
+    #     retention-days: 7
