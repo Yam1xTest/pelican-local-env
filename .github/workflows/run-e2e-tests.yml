@@ -51,11 +51,6 @@ jobs:
         path: playwright-report
         retention-days: 7
 
-    - name: Clean workspace
-      run: |
-        sudo rm -rf node_modules
-        sudo rm -rf ./*
-
     # PLAYWRIGHT CMS TESTS
 
     - name: Checkout Pelican CMS
