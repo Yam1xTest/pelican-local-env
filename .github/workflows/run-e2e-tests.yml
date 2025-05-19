@@ -51,8 +51,13 @@ jobs:
         path: playwright-report
         retention-days: 7
 
-    - name: Debug permissions
-      run: ls -la node_modules/
+    # for fix Error: EACCES: permission denied, rmdir '/home/runner/work/pelican-local-env/pelican-local-env/node_modules/.bin'
+    # https://github.com/actions/checkout/issues/1720
+
+    - name: Increasing privileges
+      run: |
+        sudo chmod -R u+w /opt/actions-runner/_work/
+        sudo chown -R <username>:<group> /opt/actions-runner/_work/
 
         
     # PLAYWRIGHT UI TESTS
