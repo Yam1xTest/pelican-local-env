@@ -30,6 +30,7 @@ jobs:
       with:
         repository: TourmalineCore/pelican-ui
         ref: feature/e2e-tests-in-pr-dev-container
+        path: pelican-ui
 
     - name: Playwright run for UI
       uses: devcontainers/ci@v0.3
@@ -58,6 +59,7 @@ jobs:
       with:
         repository: TourmalineCore/pelican-cms
         ref: feature/e2e-tests-in-pr-dev-container
+        path: pelican-cms
 
     - name: Playwright run for CMS
       uses: devcontainers/ci@v0.3
