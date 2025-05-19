@@ -35,7 +35,7 @@ jobs:
     - name: Playwright run for UI
       uses: devcontainers/ci@v0.3
       with:
-        configFile: ./.devcontainer/e2e-tests-in-pr/devcontainer.json
+        configFile: ./pelican-ui/.devcontainer/e2e-tests-in-pr/devcontainer.json
         runCmd: |
           npx playwright test --reporter=html --config=playwright.e2e.config.ts
         # we don't need to push docker image that was built using our Dev Container
@@ -64,7 +64,7 @@ jobs:
     - name: Playwright run for CMS
       uses: devcontainers/ci@v0.3
       with:
-        configFile: ./.devcontainer/e2e-tests-in-pr/devcontainer.json
+        configFile: ./pelican-cms/.devcontainer/e2e-tests-in-pr/devcontainer.json
         runCmd: |
           npx playwright test --reporter=html
         # we don't need to push docker image that was built using our Dev Container
