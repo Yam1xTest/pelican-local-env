@@ -56,8 +56,7 @@ jobs:
 
     - name: Increasing privileges
       run: |
-        sudo chmod -R u+w /opt/actions-runner/_work/
-        sudo chown -R <username>:<group> /opt/actions-runner/_work/
+        sudo chmod -R u+w /home/runner/work/pelican-local-env/pelican-local-env/node_modules/.bin
 
         
     # PLAYWRIGHT UI TESTS
