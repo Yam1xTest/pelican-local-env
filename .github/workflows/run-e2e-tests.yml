@@ -51,6 +51,9 @@ jobs:
         path: playwright-report
         retention-days: 7
 
+    - name: Debug permissions
+      run: ls -la node_modules/
+
         
     # PLAYWRIGHT UI TESTS
 
