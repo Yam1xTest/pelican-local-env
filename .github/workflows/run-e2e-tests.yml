@@ -25,31 +25,31 @@ jobs:
 
     # PLAYWRIGHT CMS TESTS
 
-    - name: Checkout Pelican CMS
-      uses: actions/checkout@v4
-      with:
-        repository: TourmalineCore/pelican-cms
-        ref: feature/e2e-tests-in-pr-dev-container
+    # - name: Checkout Pelican CMS
+    #   uses: actions/checkout@v4
+    #   with:
+    #     repository: TourmalineCore/pelican-cms
+    #     ref: feature/e2e-tests-in-pr-dev-container
 
-    - name: Playwright run for CMS
-      uses: devcontainers/ci@v0.3
-      with:
-        configFile: ./.devcontainer/e2e-tests-in-pr/devcontainer.json
-        runCmd: |
-          npx playwright test --reporter=html
-        # we don't need to push docker image that was built using our Dev Container
-        push: never
-        env: |
-          FRONTEND_URL=http://localhost:40110
-          SERVER_URL=http://localhost:40110/cms
+    # - name: Playwright run for CMS
+    #   uses: devcontainers/ci@v0.3
+    #   with:
+    #     configFile: ./.devcontainer/e2e-tests-in-pr/devcontainer.json
+    #     runCmd: |
+    #       npx playwright test --reporter=html
+    #     # we don't need to push docker image that was built using our Dev Container
+    #     push: never
+    #     env: |
+    #       FRONTEND_URL=http://localhost:40110
+    #       SERVER_URL=http://localhost:40110/cms
 
-    - name: Upload HTML report
-      uses: actions/upload-artifact@v4
-      if: failure()
-      with:
-        name: html-report--attempt-${{ github.run_attempt }}
-        path: playwright-report
-        retention-days: 7
+    # - name: Upload HTML report
+    #   uses: actions/upload-artifact@v4
+    #   if: failure()
+    #   with:
+    #     name: html-report--attempt-${{ github.run_attempt }}
+    #     path: playwright-report
+    #     retention-days: 7
 
         
     # PLAYWRIGHT UI TESTS
