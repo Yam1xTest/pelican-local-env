@@ -3,7 +3,7 @@ name: E2E Tests Execution Against Local Env
 on:
   push:
     branches:
-      - feature/e2e-tests
+      - feature/*
 
 jobs:
   run-e2e-against-local-env:
@@ -22,25 +22,30 @@ jobs:
         # we don't need to push docker image that was built using our Dev Container
         push: never
 
-
     # PLAYWRIGHT UI TESTS
 
     - name: Checkout Pelican UI
       uses: actions/checkout@v4
       with:
         repository: TourmalineCore/pelican-ui
-        ref: feature/e2e-tests-in-pr-dev-container
+        # we need to specify this path otherwise it will create this folder pelican-local-env/pelican-local-env
+        # and that will lead to permissions error at the next CMS repo checkout when it tries to remove no longer needed folder
+        # this path that matches the repo name isolates UI src folder from CMS one
         path: pelican-ui
 
     - name: Playwright Run Against UI
       uses: devcontainers/ci@v0.3
       with:
         subFolder: pelican-ui
+        # we expect that UI repo as well as CMS one contains the needed Dev Container configuration
+        # that allows us to get rid of caching and installation of deps here and rely of docker images more
         configFile: ./pelican-ui/.devcontainer/e2e-tests-in-pr/devcontainer.json
         runCmd: |
           npx playwright test --reporter=html --config=playwright.e2e.config.ts
         # we don't need to push docker image that was built using our Dev Container
         push: never
+        # we forward CI env var value from GitHub to Dev Container
+        # without it CI is not defined
         env: |
           FRONTEND_URL=http://localhost:40110 
           API_URL=http://localhost:40110/cms/api
@@ -69,7 +74,6 @@ jobs:
         configFile: ./pelican-cms/.devcontainer/e2e-tests-in-pr/devcontainer.json
         runCmd: |
           npx playwright test --reporter=html
-        # we don't need to push docker image that was built using our Dev Container
         push: never
         env: |
           FRONTEND_URL=http://localhost:40110
