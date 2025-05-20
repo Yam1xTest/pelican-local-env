@@ -38,7 +38,7 @@ jobs:
         subFolder: pelican-ui
         configFile: ./pelican-ui/.devcontainer/e2e-tests-in-pr/devcontainer.json
         runCmd: |
-          npx playwright test --reporter=html
+          npx playwright test --reporter=html --config=playwright.e2e.config.ts
         # we don't need to push docker image that was built using our Dev Container
         push: never
         env: |
