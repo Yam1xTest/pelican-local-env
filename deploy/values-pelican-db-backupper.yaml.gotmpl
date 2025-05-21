@@ -4,15 +4,14 @@ image:
   tag: "latest"
 
 extraConfigMapEnvVars:
-
-  PELICAN_FILENAME_PREFIX: "pelican-local-env-db"
+  DB_BACKUP_FILENAME_PREFIX: "pelican-local-env-db"
   PG_HOST: "postgresql"
   PGPASSWORD: "admin"
   PG_USER: "postgres"
   PG_DATABASE: "pelican_db"
-  DESTINATION_AWS_ACCESS_KEY_ID: "admin"
-  DESTINATION_AWS_SECRET_ACCESS_KEY: "rootPassword"
-  DESTINATION_AWS_BUCKET_NAME: "pelican-db-backup"
-  DESTINATION_AWS_HOST: "http://minio-s3:9000"
-  # Make backups every 1 minutes. 
-  SCHEDULE: "*/1 * * * *"
+  DESTINATION_DB_AWS_ACCESS_KEY_ID: "admin"
+  DESTINATION_DB_AWS_SECRET_ACCESS_KEY: "rootPassword"
+  DESTINATION_DB_AWS_BUCKET_NAME: "pelican-db-backup"
+  DESTINATION_DB_AWS_HOST: "http://minio-s3:9000"
+  # Make backups everyday at 19:00 (UTC). 
+  SCHEDULE: "0 19 * * *"
