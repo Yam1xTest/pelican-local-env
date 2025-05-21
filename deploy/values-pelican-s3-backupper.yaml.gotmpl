@@ -4,16 +4,16 @@ image:
   tag: "latest"
 
 extraConfigMapEnvVars:
-  PELICAN_FILENAME_PREFIX: "pelican-local-env-s3"
+  S3_BACKUP_FILENAME_PREFIX: "pelican-local-env-s3"
   # If you don't have subfolder or want to create a backup of the entire bucket, then leave SOURCE_AWS_BUCKET_SUBFOLDER_NAME with empty quotes
-  SOURCE_AWS_BUCKET_SUBFOLDER_NAME: ""
-  SOURCE_AWS_ACCESS_KEY_ID: "admin"
-  SOURCE_AWS_SECRET_ACCESS_KEY: "rootPassword"
-  SOURCE_AWS_HOST: "http://minio-s3:9000"
-  SOURCE_AWS_BUCKET_NAME: "pelican-local-env"
-  DESTINATION_AWS_ACCESS_KEY_ID: "admin"
-  DESTINATION_AWS_SECRET_ACCESS_KEY: "rootPassword"
-  DESTINATION_AWS_HOST: "http://minio-s3:9000"
-  DESTINATION_AWS_BUCKET_NAME: "pelican-s3-backups"
-  # Make backups every 1 minute. 
-  SCHEDULE: "*/1 * * * *"
+  SOURCE_S3_AWS_BUCKET_SUBFOLDER_NAME: ""
+  SOURCE_S3_AWS_ACCESS_KEY_ID: "admin"
+  SOURCE_S3_AWS_SECRET_ACCESS_KEY: "rootPassword"
+  SOURCE_S3_AWS_HOST: "http://minio-s3:9000"
+  SOURCE_S3_AWS_BUCKET_NAME: "pelican-local-env"
+  DESTINATION_S3_AWS_ACCESS_KEY_ID: "admin"
+  DESTINATION_S3_AWS_SECRET_ACCESS_KEY: "rootPassword"
+  DESTINATION_S3_AWS_HOST: "http://minio-s3:9000"
+  DESTINATION_S3_AWS_BUCKET_NAME: "pelican-s3-backups"
+  # Make backups everyday at 19:00 (UTC). 
+  SCHEDULE: "0 19 * * *"
