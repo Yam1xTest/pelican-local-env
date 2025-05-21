@@ -6,7 +6,7 @@ repositories:
   - name: ingress-nginx
     url: https://kubernetes.github.io/ingress-nginx
   - name: pelican-db-backupper
-    url: git+https://github.com/TourmalineCore/pelican-db-backupper.git?ref=feature/custom-helm-chart
+    url: git+https://github.com/TourmalineCore/pelican-db-backupper.git?ref={{ env "PELICAN_DB_BACKUPPER_BRANCH" | default "master" }}
 
 environments:
   local:
@@ -83,8 +83,9 @@ releases:
     wait: true
     chart: ../pelican-db-backupper
     needs: 
+      - pelican-cms
     values:
       # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
-      - git::https://github.com/TourmalineCore/pelican-db-backupper.git@/ci/values.yaml?ref=feature/custom-helm-chart
+      - git::https://github.com/TourmalineCore/pelican-db-backupper.git@/ci/values.yaml?ref={{ env "PELICAN_DB_BACKUPPER_BRANCH" | default "master" }}
       - values-pelican-db-backupper.yaml.gotmpl
 
