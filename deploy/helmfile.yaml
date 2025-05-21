@@ -98,8 +98,10 @@ releases:
     wait: true
     chart: pelican-db-backupper/pelican-db-backupper
     needs: 
-      - pelican-cms
+      - minio-s3
+      - postgresql
     values:
       # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
       - git::https://github.com/TourmalineCore/pelican-db-backupper.git@/ci/values.yaml?ref={{ env "PELICAN_DB_BACKUPPER_BRANCH" | default "master" }}
+      - values.yaml.gotmpl
       - values-pelican-db-backupper.yaml.gotmpl

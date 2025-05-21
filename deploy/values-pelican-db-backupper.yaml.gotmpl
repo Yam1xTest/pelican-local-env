@@ -1,8 +1,5 @@
 # Pelican local env, AGPL-3.0 license
 
-image:
-  tag: "latest"
-
 extraConfigMapEnvVars:
   DB_BACKUP_FILENAME_PREFIX: "pelican-local-env-db"
   PG_HOST: "postgresql"
@@ -13,5 +10,6 @@ extraConfigMapEnvVars:
   DESTINATION_DB_AWS_SECRET_ACCESS_KEY: "rootPassword"
   DESTINATION_DB_AWS_BUCKET_NAME: "pelican-db-backup"
   DESTINATION_DB_AWS_HOST: "http://minio-s3:9000"
-  # Make backups everyday at 19:00 (UTC). 
+  # make backups everyday at midnight by Chelyabinsk local time (which is UTC+5)
+  # we expect no one to make changes at that time
   SCHEDULE: "0 19 * * *"
