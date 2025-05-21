@@ -7,6 +7,8 @@ repositories:
     url: https://kubernetes.github.io/ingress-nginx
   - name: pelican-s3-backupper
     url: git+https://github.com/TourmalineCore/pelican-s3-backupper.git?ref={{ env "PELICAN_S3_BACKUPPER_BRANCH" | default "master" }}   
+  - name: pelican-db-backupper
+    url: git+https://github.com/TourmalineCore/pelican-db-backupper.git?ref={{ env "PELICAN_DB_BACKUPPER_BRANCH" | default "master" }}
 
 environments:
   local:
@@ -91,3 +93,17 @@ releases:
       - git::https://github.com/TourmalineCore/pelican-s3-backupper.git@/ci/values.yaml?ref={{ env "PELICAN_S3_BACKUPPER_BRANCH" | default "master" }}
       - values.yaml.gotmpl
       - values-pelican-s3-backupper.yaml.gotmpl
+
+  - name: pelican-db-backupper
+    labels:
+      app: pelican-db-backupper
+    wait: true
+    chart: pelican-db-backupper/pelican-db-backupper
+    needs: 
+      - minio-s3
+      - postgresql
+    values:
+      # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
+      - git::https://github.com/TourmalineCore/pelican-db-backupper.git@/ci/values.yaml?ref={{ env "PELICAN_DB_BACKUPPER_BRANCH" | default "master" }}
+      - values.yaml.gotmpl
+      - values-pelican-db-backupper.yaml.gotmpl
