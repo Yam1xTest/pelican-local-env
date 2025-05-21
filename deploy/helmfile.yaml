@@ -82,8 +82,6 @@ releases:
       app: pelican-s3-backupper
     wait: true
     chart: pelican-s3-backupper/pelican-s3-backupper
-    # it won't work anyway until ingress controller is created
-    # thus we wait for it to be ready first
     needs: 
       - minio-s3
     values:
