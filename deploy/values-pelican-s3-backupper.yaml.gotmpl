@@ -11,7 +11,7 @@ extraConfigMapEnvVars:
   DESTINATION_S3_AWS_ACCESS_KEY_ID: "admin"
   DESTINATION_S3_AWS_SECRET_ACCESS_KEY: "rootPassword"
   DESTINATION_S3_AWS_HOST: "http://minio-s3:9000"
-  DESTINATION_S3_AWS_BUCKET_NAME: "pelican-s3-backups"
+  DESTINATION_S3_AWS_BUCKET_NAME: "pelican-backups"
   # make backups everyday at midnight by Chelyabinsk local time (which is UTC+5)
   # we expect no one to make changes at that time
   SCHEDULE: "0 19 * * *"
