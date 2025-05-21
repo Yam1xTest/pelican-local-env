@@ -17,6 +17,8 @@ releases:
       app: ingress-nginx
     wait: true
     chart: ingress-nginx/ingress-nginx
+    // update ingress-nginx version to 1.12.1 for fix CVE-2025-1098
+    // https://www.opennet.ru/opennews/art.shtml?num=62946
     version: 4.12.1
     values:
       - values-ingress-nginx.yaml.gotmpl
