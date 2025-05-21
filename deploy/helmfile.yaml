@@ -6,7 +6,7 @@ repositories:
   - name: ingress-nginx
     url: https://kubernetes.github.io/ingress-nginx
   - name: pelican-s3-backupper
-    url: git+https://github.com/TourmalineCore/pelican-s3-backupper.git?ref=feature/custom-helm-chart    
+    url: git+https://github.com/TourmalineCore/pelican-s3-backupper.git?ref={{ env "PELICAN_S3_BACKUPPER_BRANCH" | default "master" }}   
 
 environments:
   local:
@@ -86,7 +86,6 @@ releases:
     # thus we wait for it to be ready first
     needs: 
       - minio-s3
-      - pelican-cms
     values:
       # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
       - git::https://github.com/TourmalineCore/pelican-s3-backupper.git@/ci/values.yaml?ref={{ env "PELICAN_S3_BACKUPPER_BRANCH" | default "master" }}
