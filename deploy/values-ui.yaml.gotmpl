@@ -5,4 +5,4 @@ image:
 
 extraConfigMapEnvVars:
   API_URL: "http://pelican-cms-nginx:40110/api"
-  PREVIEW_SECRET: "secret"
+  PREVIEW_SECRET: "{{ .Values.PELICAN_PREVIEW_SECRET }}"

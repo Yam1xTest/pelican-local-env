@@ -1,15 +1,15 @@
 # Pelican local env, AGPL-3.0 license
 
 extraConfigMapEnvVars:
-  DB_BACKUP_FILENAME_PREFIX: "pelican-local-env-db"
-  PG_HOST: "postgresql"
-  PGPASSWORD: "admin"
-  PG_USER: "postgres"
-  PG_DATABASE: "pelican_db"
-  DESTINATION_DB_AWS_ACCESS_KEY_ID: "admin"
-  DESTINATION_DB_AWS_SECRET_ACCESS_KEY: "rootPassword"
-  DESTINATION_DB_AWS_BUCKET_NAME: "pelican-backups"
-  DESTINATION_DB_AWS_HOST: "http://minio-s3:9000"
+  DB_BACKUP_FILENAME_PREFIX: "{{ .Values.PELICAN_DB_BACKUP_FILENAME_PREFIX }}"
+  PG_HOST: "{{ .Values.PELICAN_DATABASE_HOST }}"
+  PGPASSWORD: "{{ .Values.PELICAN_DATABASE_PASSWORD }}"
+  PG_USER: "{{ .Values.PELICAN_DATABASE_USERNAME }}"
+  PG_DATABASE: "{{ .Values.PELICAN_DATABASE_NAME }}"
+  DESTINATION_DB_AWS_ACCESS_KEY_ID: "{{ .Values.PELICAN_DESTINATION_DB_AWS_ACCESS_KEY_ID }}"
+  DESTINATION_DB_AWS_SECRET_ACCESS_KEY: "{{ .Values.PELICAN_DESTINATION_DB_AWS_SECRET_ACCESS_KEY }}"
+  DESTINATION_DB_AWS_BUCKET_NAME: "{{ .Values.PELICAN_DESTINATION_DB_AWS_BUCKET_NAME }}"
+  DESTINATION_DB_AWS_HOST: "{{ .Values.PELICAN_DESTINATION_DB_AWS_HOST }}"
   # make backups everyday at midnight by Chelyabinsk local time (which is UTC+5)
   # we expect no one to make changes at that time
-  SCHEDULE: "0 19 * * *"
+  SCHEDULE: "{{ .Values.PELICAN_BACKUPS_SCHEDULE }}"

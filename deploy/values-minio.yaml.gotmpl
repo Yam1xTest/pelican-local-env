@@ -4,7 +4,7 @@
 # here you can find the default values.yaml that we partially override in this file https://github.com/bitnami/charts/blob/main/bitnami/minio/values.yaml
 
 auth:
-  rootPassword: rootPassword
+  rootPassword: "{{ .Values.PELICAN_AWS_ACCESS_SECRET_KEY }}"
 
 defaultBuckets: pelican-local-env, pelican-backups
 
