@@ -47,7 +47,8 @@
 	"remoteUser": "root",
 	// to be able to call host OS network services
 	"runArgs": [
-		"--network=host"
+		"--network=host",
+		"--env-file", ".devcontainer/devcontainer.env"
 	],
 	// this tells kind where to look for the default config
 	"containerEnv": {

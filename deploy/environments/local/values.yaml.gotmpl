@@ -7,8 +7,8 @@ PELICAN_AWS_ACCESS_KEY_ID: "admin"
 PELICAN_AWS_ACCESS_SECRET_KEY: "rootPassword"
 PELICAN_AWS_ENDPOINT: "http://minio-s3:9000"
 PELICAN_AWS_BUCKET: "pelican-local-env"
+PELICAN_AWS_SUBFOLDER_NAME: ""
 PELICAN_AWS_REGION: "us-east-1"
-
 # make backups everyday at midnight by Chelyabinsk local time (which is UTC+5)
 # we expect no one to make changes at that time
 PELICAN_BACKUPS_SCHEDULE: "0 19 * * *"
@@ -43,4 +43,5 @@ PELICAN_ADMIN_JWT_SECRET: "hR/XPb6VISQZg71UPYijWg=="
 PELICAN_TRANSFER_TOKEN_SALT: "3pCV+b5ISok+iqUiZtTpQQ=="
 PELICAN_JWT_SECRET: "xRbyekJVuwhmMeAT7js05g=="
 
-PELICAN_PREVIEW_SECRET: "secret"
+# local-env only
+# PELICAN_PREVIEW_SECRET: "secret"

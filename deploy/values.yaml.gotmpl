@@ -1,5 +1,6 @@
 # Pelican local env, AGPL-3.0 license
 
+
 image:
   tag: "latest"
 
@@ -16,3 +17,6 @@ ingress:
 service:
   ports:
     http: 40110
+
+# prod env only
+PELICAN_PREVIEW_SECRET: "testtt"
