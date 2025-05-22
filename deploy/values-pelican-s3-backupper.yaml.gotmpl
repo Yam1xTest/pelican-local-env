@@ -2,7 +2,6 @@
 
 extraConfigMapEnvVars:
   S3_BACKUP_FILENAME_PREFIX: "{{ .Values.PELICAN_S3_BACKUP_FILENAME_PREFIX }}"
-  # If you don't have subfolder or want to create a backup of the entire bucket, then leave SOURCE_AWS_BUCKET_SUBFOLDER_NAME with empty quotes
   SOURCE_S3_AWS_BUCKET_SUBFOLDER_NAME: "{{ .Values.PELICAN_SOURCE_S3_AWS_BUCKET_SUBFOLDER_NAME }}"
   SOURCE_S3_AWS_ACCESS_KEY_ID: "{{ .Values.PELICAN_SOURCE_S3_AWS_ACCESS_KEY_ID }}"
   SOURCE_S3_AWS_SECRET_ACCESS_KEY: "{{ .Values.PELICAN_SOURCE_S3_AWS_SECRET_ACCESS_KEY }}"
@@ -12,6 +11,4 @@ extraConfigMapEnvVars:
   DESTINATION_S3_AWS_SECRET_ACCESS_KEY: "{{ .Values.PELICAN_DESTINATION_S3_AWS_SECRET_ACCESS_KEY }}"
   DESTINATION_S3_AWS_HOST: "{{ .Values.PELICAN_DESTINATION_S3_AWS_HOST }}"
   DESTINATION_S3_AWS_BUCKET_NAME: "{{ .Values.PELICAN_DESTINATION_S3_AWS_BUCKET_NAME }}"
-  # make backups everyday at midnight by Chelyabinsk local time (which is UTC+5)
-  # we expect no one to make changes at that time
   SCHEDULE: "{{ .Values.PELICAN_BACKUPS_SCHEDULE }}"
