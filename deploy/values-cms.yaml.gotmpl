@@ -18,13 +18,18 @@ extraConfigMapEnvVars:
   
   AWS_ACCESS_KEY_ID: "{{ .Values.PELICAN_AWS_ACCESS_KEY_ID }}"
   AWS_ACCESS_SECRET_KEY: "{{ .Values.PELICAN_AWS_ACCESS_SECRET_KEY }}"
+
+  {{- if .Values.PELICAN_AWS_SUBFOLDER_NAME }}
+  AWS_ENDPOINT: "{{ .Values.PELICAN_AWS_ENDPOINT }}/{{ .Values.PELICAN_AWS_BUCKET }}"
+  AWS_PUBLIC_ENDPOINT: "{{ .Values.PELICAN_AWS_ENDPOINT }}/{{ .Values.PELICAN_AWS_BUCKET }}/{{ .Values.PELICAN_AWS_SUBFOLDER_NAME}}"
+  AWS_BUCKET: "{{ .Values.PELICAN_AWS_SUBFOLDER_NAME }}"
+  {{- else }}
   AWS_ENDPOINT: "{{ .Values.PELICAN_AWS_ENDPOINT }}"
-  # The internal domain minio-s3:9000 only works on the UI, but not on the CMS
   AWS_PUBLIC_ENDPOINT: "{{ .Values.PELICAN_AWS_ENDPOINT }}/{{ .Values.PELICAN_AWS_BUCKET }}"
-  # The public domain minio-s3.localhost:40110 only works on the CMS, but not on the UI
-  # AWS_PUBLIC_ENDPOINT: "http://minio-s3.localhost:40110/pelican-local-env"
-  AWS_REGION: "{{ .Values.PELICAN_AWS_REGION }}"
   AWS_BUCKET: "{{ .Values.PELICAN_AWS_BUCKET }}"
+  {{- end }}
+  
+  AWS_REGION: "{{ .Values.PELICAN_AWS_REGION }}"
 
   SERVER_URL: "{{ .Values.baseExternalUrl }}/cms"
   FRONTEND_URL: "{{ .Values.baseExternalUrl }}"

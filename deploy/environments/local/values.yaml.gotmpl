@@ -5,6 +5,8 @@ baseExternalUrl: "http://localhost:40110"
 
 PELICAN_AWS_ACCESS_KEY_ID: "admin"
 PELICAN_AWS_ACCESS_SECRET_KEY: "rootPassword"
+# The internal domain minio-s3:9000 only works on the UI, but not on the CMS
+# The public domain minio-s3.localhost:40110 only works on the CMS, but not on the UI
 PELICAN_AWS_ENDPOINT: "http://minio-s3:9000"
 PELICAN_AWS_BUCKET: "pelican-local-env"
 # If you don't have subfolder then leave PELICAN_AWS_SUBFOLDER_NAME with empty quotes
