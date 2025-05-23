@@ -19,6 +19,7 @@ extraConfigMapEnvVars:
   AWS_ACCESS_KEY_ID: "{{ .Values.PELICAN_AWS_ACCESS_KEY_ID }}"
   AWS_ACCESS_SECRET_KEY: "{{ .Values.PELICAN_AWS_ACCESS_SECRET_KEY }}"
 
+  # if else condition is needed to handle the situation when a subfolder exists
   {{- if .Values.PELICAN_AWS_SUBFOLDER_NAME }}
   AWS_ENDPOINT: "{{ .Values.PELICAN_AWS_ENDPOINT }}/{{ .Values.PELICAN_AWS_BUCKET }}"
   AWS_PUBLIC_ENDPOINT: "{{ .Values.PELICAN_AWS_ENDPOINT }}/{{ .Values.PELICAN_AWS_BUCKET }}/{{ .Values.PELICAN_AWS_SUBFOLDER_NAME}}"
