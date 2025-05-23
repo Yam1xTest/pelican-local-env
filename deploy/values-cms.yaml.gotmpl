@@ -3,30 +3,39 @@
 extraConfigMapEnvVars:
   HOST: "0.0.0.0"
   PORT: "1337"
-  APP_KEYS: "l447ZbufnsvHicHvfpMoJA==,b00dkarNr56Er5mJLMr38w==,+GhweEM/mZi8NbBpkZIpDw==,TNAQ7URlV9PVGg7+zFXr7w=="
-  API_TOKEN_SALT: "xgb5x7cdhbCNbveTtVtq2Q=="
-  ADMIN_JWT_SECRET: "hR/XPb6VISQZg71UPYijWg=="
-  TRANSFER_TOKEN_SALT: "3pCV+b5ISok+iqUiZtTpQQ=="
-  DATABASE_CLIENT: "postgres"
-  DATABASE_HOST: "postgresql"
-  DATABASE_PORT: "5432"
-  DATABASE_NAME: "pelican_db"
-  DATABASE_USERNAME: "postgres"
-  DATABASE_PASSWORD: "admin"
-  DATABASE_SSL: "false"
-  JWT_SECRET: "xRbyekJVuwhmMeAT7js05g=="
-  SERVER_URL: "http://localhost:40110/cms"
-  AWS_ACCESS_KEY_ID: "admin"
-  AWS_ACCESS_SECRET_KEY: "rootPassword"
-  AWS_ENDPOINT: "http://minio-s3:9000"
-  # The internal domain minio-s3:9000 only works on the UI, but not on the CMS
-  AWS_PUBLIC_ENDPOINT: "http://minio-s3:9000/pelican-local-env"
-  # The public domain minio-s3.localhost:40110 only works on the CMS, but not on the UI
-  # AWS_PUBLIC_ENDPOINT: "http://minio-s3.localhost:40110/pelican-local-env"
-  AWS_REGION: "us-east-1"
-  AWS_BUCKET: "pelican-local-env"
-  PREVIEW_SECRET: "secret"
-  FRONTEND_URL: "http://localhost:40110"
+  
+  APP_KEYS: "{{ .Values.PELICAN_APP_KEYS }}"
+  API_TOKEN_SALT: "{{ .Values.PELICAN_API_TOKEN_SALT }}"
+  ADMIN_JWT_SECRET: "{{ .Values.PELICAN_ADMIN_JWT_SECRET }}"
+  TRANSFER_TOKEN_SALT: "{{ .Values.PELICAN_TRANSFER_TOKEN_SALT }}"
+  JWT_SECRET: "{{ .Values.PELICAN_JWT_SECRET }}"
+
+  DATABASE_HOST: "{{ .Values.PELICAN_DATABASE_HOST }}"
+  DATABASE_PORT: "{{ .Values.PELICAN_DATABASE_PORT }}"
+  DATABASE_NAME: "{{ .Values.PELICAN_DATABASE_NAME }}"
+  DATABASE_USERNAME: "{{ .Values.PELICAN_DATABASE_USERNAME }}"
+  DATABASE_PASSWORD: "{{ .Values.PELICAN_DATABASE_PASSWORD }}"
+  
+  AWS_ACCESS_KEY_ID: "{{ .Values.PELICAN_AWS_ACCESS_KEY_ID }}"
+  AWS_ACCESS_SECRET_KEY: "{{ .Values.PELICAN_AWS_ACCESS_SECRET_KEY }}"
+
+  # if else condition is needed to handle the situation when a subfolder exists
+  {{- if .Values.PELICAN_AWS_SUBFOLDER_NAME }}
+  AWS_ENDPOINT: "{{ .Values.PELICAN_AWS_ENDPOINT }}/{{ .Values.PELICAN_AWS_BUCKET }}"
+  AWS_PUBLIC_ENDPOINT: "{{ .Values.PELICAN_AWS_ENDPOINT }}/{{ .Values.PELICAN_AWS_BUCKET }}/{{ .Values.PELICAN_AWS_SUBFOLDER_NAME}}"
+  AWS_BUCKET: "{{ .Values.PELICAN_AWS_SUBFOLDER_NAME }}"
+  {{- else }}
+  AWS_ENDPOINT: "{{ .Values.PELICAN_AWS_ENDPOINT }}"
+  AWS_PUBLIC_ENDPOINT: "{{ .Values.PELICAN_AWS_ENDPOINT }}/{{ .Values.PELICAN_AWS_BUCKET }}"
+  AWS_BUCKET: "{{ .Values.PELICAN_AWS_BUCKET }}"
+  {{- end }}
+  
+  AWS_REGION: "{{ .Values.PELICAN_AWS_REGION }}"
+
+  SERVER_URL: "{{ .Values.baseExternalUrl }}/cms"
+  FRONTEND_URL: "{{ .Values.baseExternalUrl }}"
+
+  PREVIEW_SECRET: "{{ .Values.PELICAN_PREVIEW_SECRET }}"
 
 initContainers:
   - name: create-bucket

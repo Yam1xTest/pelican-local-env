@@ -2,3 +2,42 @@
 
 hostname: "localhost"
 baseExternalUrl: "http://localhost:40110"
+
+PELICAN_AWS_ACCESS_KEY_ID: "admin"
+PELICAN_AWS_ACCESS_SECRET_KEY: "rootPassword"
+# The internal domain minio-s3:9000 only works on the UI, but not on the CMS
+# The public domain minio-s3.localhost:40110 only works on the CMS, but not on the UI
+PELICAN_AWS_ENDPOINT: "http://minio-s3:9000"
+PELICAN_AWS_BUCKET: "pelican-local-env"
+# If you don't have subfolder then leave PELICAN_AWS_SUBFOLDER_NAME with empty quotes
+PELICAN_AWS_SUBFOLDER_NAME: ""
+PELICAN_AWS_REGION: "us-east-1"
+
+# make backups everyday at midnight by Chelyabinsk local time (which is UTC+5)
+# we expect no one to make changes at that time
+PELICAN_BACKUPS_SCHEDULE: "0 19 * * *"
+PELICAN_S3_BACKUPS_FILENAME_PREFIX: "pelican-local-env-s3"
+PELICAN_DB_BACKUPS_FILENAME_PREFIX: "pelican-local-env-db"
+PELICAN_BACKUPS_AWS_BUCKET: "pelican-backups"
+
+PELICAN_DATABASE_HOST: "postgresql"
+PELICAN_DATABASE_PORT: "5432"
+PELICAN_DATABASE_NAME: "pelican_db"
+PELICAN_DATABASE_USERNAME: "postgres"
+PELICAN_DATABASE_PASSWORD: "admin"
+
+PELICAN_APP_KEYS: "l447ZbufnsvHicHvfpMoJA==,b00dkarNr56Er5mJLMr38w==,+GhweEM/mZi8NbBpkZIpDw==,TNAQ7URlV9PVGg7+zFXr7w=="
+PELICAN_API_TOKEN_SALT: "xgb5x7cdhbCNbveTtVtq2Q=="
+PELICAN_ADMIN_JWT_SECRET: "hR/XPb6VISQZg71UPYijWg=="
+PELICAN_TRANSFER_TOKEN_SALT: "3pCV+b5ISok+iqUiZtTpQQ=="
+PELICAN_JWT_SECRET: "xRbyekJVuwhmMeAT7js05g=="
+
+PELICAN_PREVIEW_SECRET: "secret"
+
+PELICAN_CSP_ENABLED: "true"
+PELICAN_CSP_SCRIPT_SRC_URLS: "https://mc.yandex.ru https://pos.gosuslugi.ru"
+PELICAN_CSP_IMG_SRC_URLS: "https://pos.gosuslugi.ru"
+PELICAN_CSP_FONT_SRC_URLS: ""
+PELICAN_CSP_MEDIA_SRC_URLS: "https://storage.yandexcloud.net"
+PELICAN_CSP_FRAME_SRC_URLS: "https://pos.gosuslugi.ru"
+PELICAN_CSP_CONNECT_SRC_URLS: ""
