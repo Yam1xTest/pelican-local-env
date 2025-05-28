@@ -28,7 +28,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         repository: TourmalineCore/pelican-ui
-        ref: feature/local-e2e-tests-viewa
+        ref: feature/local-e2e-tests-view
         # we need to specify this path otherwise it will create this folder pelican-local-env/pelican-local-env
         # and that will lead to permissions error at the next CMS repo checkout when it tries to remove no longer needed folder
         # this path that matches the repo name isolates UI src folder from CMS one
