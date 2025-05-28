@@ -47,6 +47,7 @@ jobs:
         # we forward CI env var value from GitHub to Dev Container
         # without it CI is not defined
         env: |
+          PLAYWRIGHT_HTML_OPEN=never
           FRONTEND_URL=http://localhost:40110 
           API_URL=http://localhost:40110/cms/api
           CI
