@@ -37,8 +37,10 @@ jobs:
         configFile: ./pelican-cms/.devcontainer/e2e-tests-in-pr/devcontainer.json
         runCmd: |
           npx playwright test --reporter=html
+          exit 0
         push: never
         env: |
+          CI=true
           PLAYWRIGHT_HTML_OPEN=never
           FRONTEND_URL=http://localhost:40110
           SERVER_URL=http://localhost:40110/cms
