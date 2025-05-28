@@ -43,7 +43,7 @@ jobs:
         # that allows us to get rid of caching and installation of deps here and rely of docker images more
         configFile: ./pelican-ui/.devcontainer/e2e-tests-in-pr/devcontainer.json
         runCmd: |
-          npx playwright test --reporter=list,html --config=playwright.e2e.config.ts
+          npx playwright test --reporter=html --config=playwright.e2e.config.ts
         # we don't need to push docker image that was built using our Dev Container
         push: never
         # we forward CI env var value from GitHub to Dev Container
