@@ -7,14 +7,14 @@
 
 1. Установите Docker
 2. Установите Visual Studio Code
-3. Уставновите плагин Visual Studio Code [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+3. Установите плагин Visual Studio Code [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 3. Установите [Lens (commercial)](https://k8slens.dev/) или [OpenLens (open source)](https://github.com/MuhammedKalkan/OpenLens/releases)
 
 ## VSCode Dev Container
 
 Откройте папку этого репозитория в VSCode, он может сразу предложить вам повторно открыть его в Dev container, или вы можете нажать `Remote Explorer`, найти кнопку плюс и выбрать опцию `Open Current Folder in Container` и подождать пока он будет готов.
 
-Когда Dev Container будет готов, VsCode снова откроется. Откройте новый терминал, который будет выполнять команды в подготовленном Linux-контейнере, который мы уже предварительно установили и настроили:
+Когда Dev Container будет готов, VSCode снова откроется. Откройте новый терминал, который будет выполнять команды в подготовленном Linux-контейнере, который мы уже предварительно установили и настроили:
 
 - Docker Outside of Docker или Docker из Docker, чтобы иметь возможность использовать docker демон хоста изнутри контейнера
 - [kind](https://kind.sigs.k8s.io/) для создания локального кластера k8s в Docker
@@ -64,7 +64,7 @@ helmfile cache cleanup && helmfile --environment local --namespace local -f depl
 >Примечание: `helmfile cache cleanup` необходима для принудительного повторного извлечения values.yaml файлов из репозиториев git. В противном случае это никогда не приведет к их аннулированию.
 Ссылки: https://github.com/roboll/helmfile/issues/720#issuecomment-1516613493 и https://helmfile.readthedocs.io/en/latest/#cache.
 
->Примечание: если была обновлена версия одного из ваших сервисов, например, была опубликована более новая версия `pelican-ui:latest`, вы не увидите изменений, выполнив команду `helmfile apply`. Вместо этого вам нужно удалить соответствующий служебный pod, в случае `pelican-ui` это `pelican-nginx`. После чего он повторно автоматически развернется и получит последнии измненения.
+>Примечание: если была обновлена версия одного из ваших сервисов, например, была опубликована более новая версия `pelican-ui:latest`, вы не увидите изменений, выполнив команду `helmfile apply`. Вместо этого вам нужно удалить соответствующий служебный pod, в случае `pelican-ui` это `pelican-nginx`. После чего он повторно автоматически развернется и получит последние изменения.
 
 ### Отладка Helm-чартов
 
@@ -112,7 +112,7 @@ helmfile cache cleanup && helmfile --environment local --namespace local -f depl
 
 - в случае возникновения какой-либо другой странной проблемы:
     1. Удалите docker container под названием `pelican-control-plane`.
-    2. Удалите кластер из LensRemove the cluster from Lens.
+    2. Удалите кластер из Lens.
     3. Попробуйте выполнить все команды из инструкции, начиная с `kind create`.
 
 ## Полезные ссылки, используемые для настройки репозитория
