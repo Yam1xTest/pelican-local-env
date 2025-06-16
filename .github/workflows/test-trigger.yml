@@ -1,0 +1,10 @@
+name: Test trigger
+on: 
+  repository_dispatch:
+
+jobs:
+  Test-trigger:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout Local Env  
+        uses: actions/checkout@v3 
