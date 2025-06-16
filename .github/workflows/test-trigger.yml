@@ -2,9 +2,37 @@ name: Test trigger
 on: 
   repository_dispatch:
 
+env: 
+  BRANCH_NAME: new_branch
+
 jobs:
   Test-trigger:
     runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - name: Checkout Local Env  
         uses: actions/checkout@v3 
+
+      - name: Write new file
+        run: |
+          echo ${{ github.event.client_payload.sha }} > test.md
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "Workflow"
+          git config --global user.email "$Workflow@tourmalinecore.com"
+
+          git checkout -b $BRANCH_NAME master
+
+          git add test.md
+  
+          git commit -m "${{ github.event.client_payload.commit_message }}"
+          
+          git push origin $BRANCH_NAME
+
+      - name: Create PR
+        run: gh pr create -B master -H $BRANCH_NAME --title 'TEST' --body 'TESTBODY'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
