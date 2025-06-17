@@ -1,0 +1,49 @@
+name: Sync services
+on: 
+  repository_dispatch:
+
+jobs:
+  Sync-services:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout Local Env  
+        uses: actions/checkout@v3 
+
+      - name: Set branch name
+        run: 
+          echo "BRANCH_NAME=feature/sync-image-tag-${{ github.event.client_payload.repository }}-$(date +'%FT%H-%M')-short-sha-${{ github.event.client_payload.short_sha }}" >> $GITHUB_ENV
+
+        # yq is used to modify yaml, but it mistakenly deletes empty lines, so to prevent this, we write the changes to another file
+        # and then create a file with differences to modify the main file via patch and save the empty lines.
+        # Reference: https://stackoverflow.com/a/57938189
+      - name: Write new UI image tag to values
+        run: |
+          cp deploy/values-ui.yaml.gotmpl deploy/values-ui.yaml.gotmpl.copy
+          yq . deploy/values-ui.yaml.gotmpl > deploy/values-ui.yaml.gotmpl.1
+          yq ".image.tag =\"local-env-sha-${{ github.event.client_payload.sha }}\"" deploy/values-ui.yaml.gotmpl > deploy/values-ui.yaml.gotmpl.2
+          diff deploy/values-ui.yaml.gotmpl.1 deploy/values-ui.yaml.gotmpl.2 > deploy/values-ui.yaml.gotmpl.diff || true
+          patch -o deploy/values-ui.yaml.gotmpl deploy/values-ui.yaml.gotmpl.copy < deploy/values-ui.yaml.gotmpl.diff
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "Workflow"
+          git config --global user.email "$Workflow@tourmalinecore.com"
+
+          git checkout -b $BRANCH_NAME master
+
+          git add deploy/values-ui.yaml.gotmpl
+
+          git commit -m "${{ github.event.client_payload.commit_message }}"
+          
+          git push origin $BRANCH_NAME
+
+      - name: Set PR title
+        run: 'echo "PR_TITLE=sync: ${{ github.event.client_payload.repository }} image tag" >> $GITHUB_ENV' 
+        
+      - name: Create PR
+        run: gh pr create -B master -H $BRANCH_NAME --title "${{ env.PR_TITLE }}" --body "${{ github.event.client_payload.commit_message }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
