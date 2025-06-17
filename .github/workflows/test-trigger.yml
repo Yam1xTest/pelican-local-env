@@ -16,6 +16,9 @@ jobs:
         run: 
           echo "BRANCH_NAME=feature/sync-image-tag-${{ github.event.client_payload.repository }}-$(date +'%FT%H-%M')-short-sha-${{ github.event.client_payload.short_sha }}" >> $GITHUB_ENV
 
+        # yq is used to modify yaml, but it mistakenly deletes empty lines, so to prevent this, we write the changes to another file
+        # and then create a file with differences to modify the main file via patch and save the empty lines.
+        # Reference: https://stackoverflow.com/a/57938189
       - name: Write new UI image tag to values
         run: |
           cp deploy/values-ui.yaml.gotmpl deploy/values-ui.yaml.gotmpl.copy
@@ -32,13 +35,13 @@ jobs:
           git checkout -b $BRANCH_NAME master
 
           git add deploy/values-ui.yaml.gotmpl
-  
+
           git commit -m "${{ github.event.client_payload.commit_message }}"
           
           git push origin $BRANCH_NAME
 
       - name: Set PR title
-        run: 'echo "PR_TITLE=chore: sync ${{ github.event.client_payload.repository }} image tag" >> $GITHUB_ENV' 
+        run: 'echo "PR_TITLE=sync: ${{ github.event.client_payload.repository }} image tag" >> $GITHUB_ENV' 
         
       - name: create PR
         run: gh pr create -B master -H $BRANCH_NAME --title "${{ env.PR_TITLE }}" --body "${{ github.event.client_payload.commit_message }}"
