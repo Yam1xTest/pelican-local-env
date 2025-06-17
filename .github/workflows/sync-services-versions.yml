@@ -1,9 +1,9 @@
-name: Test trigger
+name: Sync services
 on: 
   repository_dispatch:
 
 jobs:
-  Test-trigger:
+  Sync-services:
     runs-on: ubuntu-24.04
     permissions:
       contents: write
