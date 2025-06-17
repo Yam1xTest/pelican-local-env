@@ -20,7 +20,7 @@ jobs:
         run: |
           cp deploy/values-ui.yaml.gotmpl deploy/values-ui.yaml.gotmpl.copy
           yq . deploy/values-ui.yaml.gotmpl > deploy/values-ui.yaml.gotmpl.1
-          yq ".image.tag =\"locan-env-sha-${{ github.event.client_payload.sha }}\"" deploy/values-ui.yaml.gotmpl > deploy/values-ui.yaml.gotmpl.2
+          yq ".image.tag =\"local-env-sha-${{ github.event.client_payload.sha }}\"" deploy/values-ui.yaml.gotmpl > deploy/values-ui.yaml.gotmpl.2
           diff deploy/values-ui.yaml.gotmpl.1 deploy/values-ui.yaml.gotmpl.2 > deploy/values-ui.yaml.gotmpl.diff || true
           patch -o deploy/values-ui.yaml.gotmpl deploy/values-ui.yaml.gotmpl.copy < deploy/values-ui.yaml.gotmpl.diff
 
