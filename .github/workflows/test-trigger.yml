@@ -2,9 +2,6 @@ name: Test trigger
 on: 
   repository_dispatch:
 
-env: 
-  BRANCH_NAME: new_branch
-
 jobs:
   Test-trigger:
     runs-on: ubuntu-24.04
@@ -15,9 +12,17 @@ jobs:
       - name: Checkout Local Env  
         uses: actions/checkout@v3 
 
-      - name: Write new file
+      - name: Set branch name
+        run: 
+          echo "BRANCH_NAME=feature/sync-image-tag-${{ github.event.client_payload.repository }}-$(date +'%FT%H-%M')-short-sha-${{ github.event.client_payload.short_sha }}" >> $GITHUB_ENV
+
+      - name: Write new UI image tag to values
         run: |
-          echo ${{ github.event.client_payload.sha }} > test.md
+          cp deploy/values-ui.yaml.gotmpl deploy/values-ui.yaml.gotmpl.copy
+          yq . deploy/values-ui.yaml.gotmpl > deploy/values-ui.yaml.gotmpl.1
+          yq ".image.tag =\"locan-env-sha-${{ github.event.client_payload.sha }}\"" deploy/values-ui.yaml.gotmpl > deploy/values-ui.yaml.gotmpl.2
+          diff deploy/values-ui.yaml.gotmpl.1 deploy/values-ui.yaml.gotmpl.2 > deploy/values-ui.yaml.gotmpl.diff || true
+          patch -o deploy/values-ui.yaml.gotmpl deploy/values-ui.yaml.gotmpl.copy < deploy/values-ui.yaml.gotmpl.diff
 
       - name: Commit and Push Changes
         run: |
@@ -26,13 +31,16 @@ jobs:
 
           git checkout -b $BRANCH_NAME master
 
-          git add test.md
+          git add deploy/values-ui.yaml.gotmpl
   
           git commit -m "${{ github.event.client_payload.commit_message }}"
           
           git push origin $BRANCH_NAME
 
-      - name: Create PR
-        run: gh pr create -B master -H $BRANCH_NAME --title 'TEST' --body 'TESTBODY'
+      - name: Set PR title
+        run: 'echo "PR_TITLE=chore: sync ${{ github.event.client_payload.repository }} image tag" >> $GITHUB_ENV' 
+        
+      - name: create PR
+        run: gh pr create -B master -H $BRANCH_NAME --title "${{ env.PR_TITLE }}" --body "${{ github.event.client_payload.commit_message }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
