@@ -37,7 +37,7 @@ jobs:
 
           git checkout -b $BRANCH_NAME master
 
-          git add deploy/values-ui.yaml.gotmpl
+          git add $PATH_TO_VALUES
 
           git commit -m "${{ github.event.client_payload.commit_message }}"
           
