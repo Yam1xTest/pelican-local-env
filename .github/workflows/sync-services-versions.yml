@@ -27,8 +27,8 @@ jobs:
         # Reference: https://stackoverflow.com/a/57938189
       - name: Write new image tag to values
         run: |
-          sed "0,/tag:.*/{s//tag: \"${{ github.event.client_payload.image_tag }}\""/" PATH_TO_VALUES >  PATH_TO_VALUES.2
-          cp PATH_TO_VALUES.2 PATH_TO_VALUES.gotmpl
+          sed "0,/tag:.*/{s//tag: \"${{ github.event.client_payload.image_tag }}\""/" $PATH_TO_VALUES >  $PATH_TO_VALUES.2
+          cp $PATH_TO_VALUES.2 $PATH_TO_VALUES.gotmpl
 
       - name: Commit and Push Changes
         run: |
