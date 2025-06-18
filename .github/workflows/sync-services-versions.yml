@@ -28,7 +28,7 @@ jobs:
       - name: Write new image tag to values
         run: |
           sed "0,/tag:.*/s//tag: \"TEST\"/" $PATH_TO_VALUES >  $PATH_TO_VALUES.2
-          cp $PATH_TO_VALUES.2 $PATH_TO_VALUES.gotmpl
+          cp $PATH_TO_VALUES.2 $PATH_TO_VALUES
 
       - name: Commit and Push Changes
         run: |
