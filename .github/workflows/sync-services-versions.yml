@@ -28,9 +28,26 @@ jobs:
       - name: Write new image tag to values
         run: |
           cp $PATH_TO_VALUES $PATH_TO_VALUES.copy
+          
+      - name: Write new image tag to values
+        run: |
           yq . $PATH_TO_VALUES > $PATH_TO_VALUES.1
           yq ".image.tag =\"${{ github.event.client_payload.image_tag }}\"" $PATH_TO_VALUES > $PATH_TO_VALUES.2
           diff $PATH_TO_VALUES.1 $PATH_TO_VALUES.2 > $PATH_TO_VALUES.diff || true
+          patch -o $PATH_TO_VALUES $PATH_TO_VALUES.copy < $PATH_TO_VALUES.diff
+
+      - name: Write new image tag to values
+        run: |
+          yq ".image.tag =\"${{ github.event.client_payload.image_tag }}\"" $PATH_TO_VALUES > $PATH_TO_VALUES.2
+
+      - name: Write new image tag to values
+        run: |
+          diff $PATH_TO_VALUES.1 $PATH_TO_VALUES.2 > $PATH_TO_VALUES.diff || true
+
+
+      - name: Write new image tag to values
+        run: |
+
           patch -o $PATH_TO_VALUES $PATH_TO_VALUES.copy < $PATH_TO_VALUES.diff
 
       - name: Commit and Push Changes
