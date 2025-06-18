@@ -27,25 +27,8 @@ jobs:
         # Reference: https://stackoverflow.com/a/57938189
       - name: Write new image tag to values
         run: |
-          cp $PATH_TO_VALUES $PATH_TO_VALUES.copy
-          
-      - name: Write new image tag to values
-        run: |
-          yq -f . $PATH_TO_VALUES > $PATH_TO_VALUES.1
-
-      - name: Write new image tag to values
-        run: |
-          yq ".image.tag =\"${{ github.event.client_payload.image_tag }}\"" $PATH_TO_VALUES > $PATH_TO_VALUES.2
-
-      - name: Write new image tag to values
-        run: |
-          diff $PATH_TO_VALUES.1 $PATH_TO_VALUES.2 > $PATH_TO_VALUES.diff || true
-
-
-      - name: Write new image tag to values
-        run: |
-
-          patch -o $PATH_TO_VALUES $PATH_TO_VALUES.copy < $PATH_TO_VALUES.diff
+          sed "0,/tag:.*/s//tag: \"${{ github.event.client_payload.image_tag }}\""/" PATH_TO_VALUES >  PATH_TO_VALUES.2
+          cp PATH_TO_VALUES.2 PATH_TO_VALUES.gotmpl
 
       - name: Commit and Push Changes
         run: |
