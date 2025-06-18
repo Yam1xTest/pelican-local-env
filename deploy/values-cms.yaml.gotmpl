@@ -1,20 +1,28 @@
+# Pelican local env, AGPL-3.0 license
+
 image:
   tag: "latest"
+
 extraConfigMapEnvVars:
   HOST: "0.0.0.0"
   PORT: "1337"
+  
   APP_KEYS: "{{ .Values.PELICAN_APP_KEYS }}"
   API_TOKEN_SALT: "{{ .Values.PELICAN_API_TOKEN_SALT }}"
   ADMIN_JWT_SECRET: "{{ .Values.PELICAN_ADMIN_JWT_SECRET }}"
   TRANSFER_TOKEN_SALT: "{{ .Values.PELICAN_TRANSFER_TOKEN_SALT }}"
   JWT_SECRET: "{{ .Values.PELICAN_JWT_SECRET }}"
+
   DATABASE_HOST: "{{ .Values.PELICAN_DATABASE_HOST }}"
   DATABASE_PORT: "{{ .Values.PELICAN_DATABASE_PORT }}"
   DATABASE_NAME: "{{ .Values.PELICAN_DATABASE_NAME }}"
   DATABASE_USERNAME: "{{ .Values.PELICAN_DATABASE_USERNAME }}"
   DATABASE_PASSWORD: "{{ .Values.PELICAN_DATABASE_PASSWORD }}"
+  
   AWS_ACCESS_KEY_ID: "{{ .Values.PELICAN_AWS_ACCESS_KEY_ID }}"
   AWS_ACCESS_SECRET_KEY: "{{ .Values.PELICAN_AWS_ACCESS_SECRET_KEY }}"
+
+  # if else condition is needed to handle the situation when a subfolder exists
   {{- if .Values.PELICAN_AWS_SUBFOLDER_NAME }}
   AWS_ENDPOINT: "{{ .Values.PELICAN_AWS_ENDPOINT }}/{{ .Values.PELICAN_AWS_BUCKET }}"
   AWS_PUBLIC_ENDPOINT: "{{ .Values.PELICAN_AWS_ENDPOINT }}/{{ .Values.PELICAN_AWS_BUCKET }}/{{ .Values.PELICAN_AWS_SUBFOLDER_NAME}}"
