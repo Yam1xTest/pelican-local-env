@@ -22,8 +22,7 @@ jobs:
         # so for that reason we use Stream EDitor which can find needeed string using regular expressions and change it to a new value
       - name: Write new UI image tag to values
         run: |
-          sed "0,/tag:.*/s//tag: \"local-env-sha-${{ github.event.client_payload.sha }}\"/" deploy/values-ui.yaml.gotmpl >  deploy/values-ui.yaml.gotmpl.2
-          cp deploy/values-ui.yaml.gotmpl.2 deploy/values-ui.yaml.gotmpl
+          sed -i "0,/tag:.*/s//tag: \"local-env-sha-${{ github.event.client_payload.sha }}\"/" deploy/values-ui.yaml.gotmpl
 
       - name: Commit and Push Changes
         run: |
