@@ -11,4 +11,6 @@ jobs:
 
     steps:
     - name: bebebe
-      run: echo bebebe
+      run: |
+        sleep 10
+        echo bebebe
