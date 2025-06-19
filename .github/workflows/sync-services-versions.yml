@@ -18,16 +18,12 @@ jobs:
         run: 
           echo "BRANCH_NAME=feature/sync-image-tag-${{ github.event.client_payload.repository }}-$(date +'%FT%H-%M')-short-sha-${{ github.event.client_payload.short_sha }}" >> $GITHUB_ENV
 
-        # yq is used to modify yaml, but it mistakenly deletes empty lines, so to prevent this, we write the changes to another file
-        # and then create a file with differences to modify the main file via patch and save the empty lines.
-        # Reference: https://stackoverflow.com/a/57938189
+        # We tried to use yq to change the image tag, but at values for cms we have non-yaml code that yq can`t parse or ignore
+        # so for that reason we use Stream EDitor which can find needeed string using regular expressions and change it to a new value
       - name: Write new UI image tag to values
         run: |
-          cp deploy/values-ui.yaml.gotmpl deploy/values-ui.yaml.gotmpl.copy
-          yq . deploy/values-ui.yaml.gotmpl > deploy/values-ui.yaml.gotmpl.1
-          yq ".image.tag =\"local-env-sha-${{ github.event.client_payload.sha }}\"" deploy/values-ui.yaml.gotmpl > deploy/values-ui.yaml.gotmpl.2
-          diff deploy/values-ui.yaml.gotmpl.1 deploy/values-ui.yaml.gotmpl.2 > deploy/values-ui.yaml.gotmpl.diff || true
-          patch -o deploy/values-ui.yaml.gotmpl deploy/values-ui.yaml.gotmpl.copy < deploy/values-ui.yaml.gotmpl.diff
+          sed "0,/tag:.*/s//tag: \"local-env-sha-${{ github.event.client_payload.sha }}\"/" deploy/values-ui.yaml.gotmpl >  deploy/values-ui.yaml.gotmpl.2
+          cp deploy/values-ui.yaml.gotmpl.2 deploy/values-ui.yaml.gotmpl
 
       - name: Commit and Push Changes
         run: |
