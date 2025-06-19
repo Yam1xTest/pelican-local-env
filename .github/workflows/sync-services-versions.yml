@@ -59,4 +59,4 @@ jobs:
       - name: Approve PR
         run: gh pr review $BRANCH_NAME -a
         env:
-          GITHUB_TOKEN: ${{ secrets.PELICAN_ENV_SYNC_TRIGGER_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT_PR }}
