@@ -53,3 +53,5 @@ jobs:
 
       - name: Enable auto-merge for PR
         run: gh pr merge $BRANCH_NAME --auto
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
