@@ -55,3 +55,8 @@ jobs:
         run: gh pr merge $BRANCH_NAME --auto --merge --subject "${{ env.PR_TITLE }}" --body "${{ github.event.client_payload.commit_message }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Approve PR
+        run: gh pr review $BRANCH_NAME -a
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
