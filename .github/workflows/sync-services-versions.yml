@@ -32,8 +32,8 @@ jobs:
 
       - name: Commit and Push Changes
         run: |
-          git config --global user.name "Workflow"
-          git config --global user.email "$Workflow@tourmalinecore.com"
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
 
           git checkout -b $BRANCH_NAME master
 
