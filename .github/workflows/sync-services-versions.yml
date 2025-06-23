@@ -32,8 +32,9 @@ jobs:
 
       - name: Commit and Push Changes
         run: |
-          git config --global user.name "Workflow"
-          git config --global user.email "$Workflow@tourmalinecore.com"
+          git config --global user.name github-actions[bot]
+          # 41898282 is id of GitHub Actions Bot that was taken from GitHub API: https://api.github.com/users/github-actions[bot]
+          git config --global user.email 41898282+github-actions[bot]@users.noreply.github.com
 
           git checkout -b $BRANCH_NAME master
 
