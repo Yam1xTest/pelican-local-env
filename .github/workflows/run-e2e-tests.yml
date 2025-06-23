@@ -46,7 +46,10 @@ jobs:
         push: never
         # we forward CI env var value from GitHub to Dev Container
         # without it CI is not defined
+        # We set the PLAYWRIGHT_HTML_OPEN flag to never to avoid opening the HTML report if the test fails
+        # https://playwright.dev/docs/test-reporters#html-reporter 
         env: |
+          PLAYWRIGHT_HTML_OPEN=never
           FRONTEND_URL=http://localhost:40110 
           API_URL=http://localhost:40110/cms/api
           CI
@@ -56,7 +59,7 @@ jobs:
       if: failure()
       with:
         name: html-report--attempt-${{ github.run_attempt }}
-        path: playwright-report
+        path: pelican-ui/playwright-report
         retention-days: 7
 
     # PLAYWRIGHT CMS TESTS
@@ -76,6 +79,7 @@ jobs:
           npx playwright test --reporter=html
         push: never
         env: |
+          PLAYWRIGHT_HTML_OPEN=never
           FRONTEND_URL=http://localhost:40110
           SERVER_URL=http://localhost:40110/cms
 
@@ -84,5 +88,5 @@ jobs:
       if: failure()
       with:
         name: html-report--attempt-${{ github.run_attempt }}
-        path: playwright-report
+        path: pelican-cms/playwright-report
         retention-days: 7
