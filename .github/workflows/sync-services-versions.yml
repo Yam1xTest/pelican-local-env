@@ -20,7 +20,7 @@ jobs:
       
       - name: Set path to values file
         run:
-          # Example of PATH_TO_VALUES: deploy/values-values-ui.yaml.gotmpl 
+          # Example of PATH_TO_VALUES: deploy/values-ui.yaml.gotmpl 
           echo "PATH_TO_VALUES=${{ github.event.client_payload.path_to_values }}" >> $GITHUB_ENV
 
         # We tried to use yq to change the image tag, but in the values files for helmfile we have non-yaml code that yq can`t parse or ignore
