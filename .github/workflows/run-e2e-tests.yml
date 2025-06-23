@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - feature/*
+      - master
 
 jobs:
   run-e2e-against-local-env:
