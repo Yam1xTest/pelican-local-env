@@ -12,5 +12,6 @@ jobs:
     steps:
     - name: bebebe
       run: |
+        # echo test
         sleep 10
         echo bebebe
