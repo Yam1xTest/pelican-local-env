@@ -8,7 +8,7 @@ repositories:
   - name: pelican-s3-backupper
     url: git+https://github.com/TourmalineCore/pelican-s3-backupper.git?ref={{ env "PELICAN_S3_BACKUPPER_BRANCH" | default "master" }}   
   - name: pelican-db-backupper
-    url: git+https://github.com/TourmalineCore/pelican-db-backupper.git?ref={{ env "PELICAN_DB_BACKUPPER_BRANCH" | default "master" }}
+    url: git+https://github.com/Yam1xTest/pelican-db-backupper.git?ref={{ env "PELICAN_DB_BACKUPPER_BRANCH" | default "master" }}
 
 environments:
   local:
