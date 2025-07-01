@@ -6,7 +6,7 @@ repositories:
   - name: ingress-nginx
     url: https://kubernetes.github.io/ingress-nginx
   - name: pelican-s3-backupper
-    url: git+https://github.com/TourmalineCore/pelican-s3-backupper.git?ref={{ env "PELICAN_S3_BACKUPPER_BRANCH" | default "master" }}   
+    url: git+https://github.com/Yam1xTest/pelican-s3-backupper.git?ref={{ env "PELICAN_S3_BACKUPPER_BRANCH" | default "master" }}   
   - name: pelican-db-backupper
     url: git+https://github.com/Yam1xTest/pelican-db-backupper.git?ref={{ env "PELICAN_DB_BACKUPPER_BRANCH" | default "master" }}
 
@@ -90,7 +90,7 @@ releases:
       - minio-s3
     values:
       # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
-      - git::https://github.com/TourmalineCore/pelican-s3-backupper.git@/ci/values.yaml?ref={{ env "PELICAN_S3_BACKUPPER_BRANCH" | default "master" }}
+      - git::https://github.com/Yam1xTest/pelican-s3-backupper.git@/ci/values.yaml?ref={{ env "PELICAN_S3_BACKUPPER_BRANCH" | default "master" }}
       - values.yaml.gotmpl
       - values-pelican-s3-backupper.yaml.gotmpl
 
