@@ -122,3 +122,32 @@ helmfile cache cleanup && helmfile --environment local --namespace local -f depl
 - https://github.com/kubernetes-sigs/kind/issues/3196
 - https://github.com/devcontainers/features
 - https://fenyuk.medium.com/helm-for-kubernetes-helmfile-c22d1ab5e604
+
+## Локальный билд из feature-ветки 
+
+Шаги, чтобы проверить еще не смерженные изменения из ветки (на примере UI, в CMS репе по аналогии):
+1. В репозитории UI нужно запустить билд образа: 
+```bash
+docker build -t local-ui:0.0.1 . 
+```
+2. В репозитории local-env в docker контейнере после того, как 1 шаг закончится, нужно запустить: 
+
+```bash
+kind load docker-image local-ui:0.0.1 --name pelican
+```
+
+3. В *values-ui.yaml.gotmpl*  вставить:
+
+```bash
+image:
+    registry: ""
+    repository: "local-ui"
+    tag: "0.0.1"
+    pullPolicy: "Never"
+```
+
+4. Выполнить команду:
+
+```bash
+helmfile cache cleanup && helmfile --environment local --namespace local -f deploy/helmfile.yaml apply
+```
