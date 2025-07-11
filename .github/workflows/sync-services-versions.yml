@@ -28,7 +28,7 @@ jobs:
         # The -i flag is needed to write new image tag directly to values file
       - name: Write new image tag to values
         run: |
-          sed -i "0,/tag:.*/s//tag: \"local-env-sha-${{ github.event.client_payload.image_tag }}\"/" $PATH_TO_VALUES
+          sed -i "0,/tag:.*/s//tag: \"${{ github.event.client_payload.image_tag }}\"/" $PATH_TO_VALUES
 
       - name: Commit and Push Changes
         run: |
