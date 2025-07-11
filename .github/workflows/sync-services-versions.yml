@@ -28,7 +28,7 @@ jobs:
         # The -i flag is needed to write new image tag directly to values file
       - name: Write new image tag to values
         run: |
-          sed -i "0,/tag:.*/s//tag: \"local-env-sha-${{ github.event.client_payload.sha }}\"/" deploy/values-ui.yaml.gotmpl
+          sed -i "0,/tag:.*/s//tag: \"local-env-sha-${{ github.event.client_payload.image_tag }}\"/" $PATH_TO_VALUES
 
       - name: Commit and Push Changes
         run: |
@@ -56,3 +56,8 @@ jobs:
         run: gh pr merge $BRANCH_NAME --auto --merge --subject "${{ env.PR_TITLE }}" --body "${{ github.event.client_payload.commit_message }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Approve PR
+        run: gh pr review $BRANCH_NAME -a
+        env:
+          GITHUB_TOKEN: ${{ secrets.PELICAN_ENV_SYNC_TRIGGER_TOKEN }}
