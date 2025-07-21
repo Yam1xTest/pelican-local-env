@@ -34,8 +34,8 @@ jobs:
 
       - name: Write new tag to helmfile
         run: |
-          sed -i "0,/git+https:\/\/github.com\/TourmalineCore\/${{ github.event.client_payload.service_name }}.git?ref=.*/s//git+https:\/\/github.com\/TourmalineCore\/${{ github.event.client_payload.service_name }}.git?ref=${{ github.sha }}/" $PATH_TO_HELMFILE
-          sed -i "0,/git::https:\/\/github.com\/TourmalineCore\/${{ github.event.client_payload.service_name }}.git@\/ci\/values.yaml?ref=.*/s//git::https:\/\/github.com\/TourmalineCore\/${{ github.event.client_payload.service_name }}.git@\/ci\/values.yaml?ref=${{ github.sha }}/" $PATH_TO_HELMFILE
+          sed -i "0,/git+https:\/\/github.com\/TourmalineCore\/${{ github.event.client_payload.service_name }}.git?ref=.*/s//git+https:\/\/github.com\/TourmalineCore\/${{ github.event.client_payload.service_name }}.git?ref=${{ github.event.client_payload.sha }}/" $PATH_TO_HELMFILE
+          sed -i "0,/git::https:\/\/github.com\/TourmalineCore\/${{ github.event.client_payload.service_name }}.git@\/ci\/values.yaml?ref=.*/s//git::https:\/\/github.com\/TourmalineCore\/${{ github.event.client_payload.service_name }}.git@\/ci\/values.yaml?ref=${{ github.event.client_payload.sha }}/" $PATH_TO_HELMFILE
 
       - name: Commit and Push Changes
         run: |
