@@ -46,6 +46,7 @@ jobs:
           git checkout -b $BRANCH_NAME master
 
           git add $PATH_TO_VALUES
+          git add $PATH_TO_HELMFILE
 
           git commit -m "${{ github.event.client_payload.commit_message }}"
           
