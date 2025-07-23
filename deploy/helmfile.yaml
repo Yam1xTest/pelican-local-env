@@ -8,7 +8,7 @@ repositories:
   - name: pelican-s3-backupper
     url: git+https://github.com/TourmalineCore/pelican-s3-backupper.git?ref={{ env "PELICAN_S3_BACKUPPER_BRANCH" | default "master" }}   
   - name: pelican-db-backupper
-    url: git+https://github.com/TourmalineCore/pelican-db-backupper.git?ref=050be55c181663d23753b594240cb62e6f905c51
+    url: git+https://github.com/TourmalineCore/pelican-db-backupper.git?ref=c0a082d6a2f1340e5056c764d5ff771517f00421
   - name: pelican-env-synchronizer
     url: git+https://github.com/TourmalineCore/pelican-env-synchronizer.git?ref={{ env "PELICAN_ENV_SYNCHRONIZER_BRANCH" | default "master" }}
 
@@ -106,7 +106,7 @@ releases:
       - postgresql
     values:
       # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
-      - git::https://github.com/TourmalineCore/pelican-db-backupper.git@/ci/values.yaml?ref=050be55c181663d23753b594240cb62e6f905c51
+      - git::https://github.com/TourmalineCore/pelican-db-backupper.git@/ci/values.yaml?ref=c0a082d6a2f1340e5056c764d5ff771517f00421
       - values.yaml.gotmpl
       - values-pelican-db-backupper.yaml.gotmpl
 
