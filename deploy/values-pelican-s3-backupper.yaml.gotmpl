@@ -1,5 +1,12 @@
 # Pelican local env, AGPL-3.0 license
 
+# —— START —— #
+# —— DO NOT CHANGE MANUALLY —— #
+# —— UPDATED IN WORKFLOWS —— #
+image:
+  tag: "latest"
+# —— END —— #
+
 extraConfigMapEnvVars:
   S3_BACKUPS_FILENAME_PREFIX: "{{ .Values.PELICAN_S3_BACKUPS_FILENAME_PREFIX }}"
   SOURCE_S3_AWS_BUCKET_SUBFOLDER_NAME: "{{ .Values.PELICAN_AWS_SUBFOLDER_NAME }}"

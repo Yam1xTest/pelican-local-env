@@ -1,5 +1,12 @@
 # Pelican local env, AGPL-3.0 license
 
+# —— START —— #
+# —— DO NOT CHANGE MANUALLY —— #
+# —— UPDATED IN WORKFLOWS —— #
+image:
+  tag: "latest"
+# —— END —— #
+
 extraConfigMapEnvVars:
   SCHEDULE: "{{ .Values.PELICAN_SYNCHRONIZER_SCHEDULE }}"
   SYNCHRONIZER_ENABLED: "{{ .Values.PELICAN_SYNCHRONIZER_ENABLED }}"
