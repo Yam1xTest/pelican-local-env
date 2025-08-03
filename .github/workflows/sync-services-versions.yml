@@ -18,6 +18,10 @@ jobs:
         run: 
           echo "BRANCH_NAME=feature/sync-image-tag-${{ github.event.client_payload.repository }}-$(date +'%FT%H-%M')-short-sha-${{ github.event.client_payload.short_sha }}" >> $GITHUB_ENV
 
+      - name: echo commit message
+        run: 
+          echo ${{ github.event.client_payload.commit_message }}
+          
       - name: Set commit message
         run: 
           echo COMMIT_MESSAGE=${{ github.event.client_payload.commit_message }} | sed 's/'\"'/'\''/g' >> $GITHUB_ENV
