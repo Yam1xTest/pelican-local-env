@@ -17,7 +17,11 @@ jobs:
       - name: Set branch name
         run: 
           echo "BRANCH_NAME=feature/sync-image-tag-${{ github.event.client_payload.repository }}-$(date +'%FT%H-%M')-short-sha-${{ github.event.client_payload.short_sha }}" >> $GITHUB_ENV
-      
+
+      - name: Set commit message
+        run: 
+          echo "COMMIT_MESSAGE=${{ github.event.client_payload.commit_message }}" | sed 's/'\"'/'\''/g' >> $GITHUB_ENV
+
       - name: Set path to values file and helmfile
         run: |
           # Example of PATH_TO_VALUES: deploy/values-ui.yaml.gotmpl 
@@ -49,7 +53,7 @@ jobs:
 
           git add $PATH_TO_HELMFILE
 
-          git commit -m "${{ github.event.client_payload.commit_message | sed 's/'\"'/'\''/g' }}"
+          git commit -m "${{ env.COMMIT_MESSAGE }}"
           
           git push origin $BRANCH_NAME
 
@@ -57,12 +61,12 @@ jobs:
         run: 'echo "PR_TITLE=sync: ${{ github.event.client_payload.repository }} image tag" >> $GITHUB_ENV' 
         
       - name: Create PR
-        run: gh pr create -B master -H $BRANCH_NAME --title "${{ env.PR_TITLE }}" --body "${{ github.event.client_payload.commit_message }}"
+        run: gh pr create -B master -H $BRANCH_NAME --title "${{ env.PR_TITLE }}" --body "${{ env.COMMIT_MESSAGE }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Enable auto-merge for PR
-        run: gh pr merge $BRANCH_NAME --auto --merge --subject "${{ env.PR_TITLE }}" --body "${{ github.event.client_payload.commit_message }}"
+        run: gh pr merge $BRANCH_NAME --auto --merge --subject "${{ env.PR_TITLE }}" --body "${{ env.COMMIT_MESSAGE }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
