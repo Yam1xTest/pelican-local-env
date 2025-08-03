@@ -22,6 +22,8 @@ jobs:
         run: 
           echo "${{ github.event.client_payload.commit_message }}" > commit_message.txt
 
+      - name: cat
+        run: cat commit_message.txt
       - name: Set path to values file and helmfile
         run: |
           # Example of PATH_TO_VALUES: deploy/values-ui.yaml.gotmpl 
