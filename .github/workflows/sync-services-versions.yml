@@ -20,11 +20,7 @@ jobs:
 
       - name: echo commit message
         run: 
-          echo ${{ github.event.client_payload.commit_message }}
-          
-      - name: Set commit message
-        run: 
-          echo COMMIT_MESSAGE=${{ github.event.client_payload.commit_message }} | sed 's/'\"'/'\''/g' >> $GITHUB_ENV
+          echo ${{ github.event.client_payload.commit_message }} > commit_message.txt
 
       - name: Set path to values file and helmfile
         run: |
@@ -57,7 +53,7 @@ jobs:
 
           git add $PATH_TO_HELMFILE
 
-          git commit -m "${{ env.COMMIT_MESSAGE }}"
+          git commit -f commit_message.txt
           
           git push origin $BRANCH_NAME
 
