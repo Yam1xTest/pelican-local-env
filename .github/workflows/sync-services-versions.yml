@@ -20,7 +20,7 @@ jobs:
 
       - name: Set commit message
         run: 
-          echo "COMMIT_MESSAGE=${{ github.event.client_payload.commit_message }}" | sed 's/'\"'/'\''/g' >> $GITHUB_ENV
+          echo COMMIT_MESSAGE=${{ github.event.client_payload.commit_message }} | sed 's/'\"'/'\''/g' >> $GITHUB_ENV
 
       - name: Set path to values file and helmfile
         run: |
