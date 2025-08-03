@@ -61,7 +61,7 @@ releases:
       - ingress-nginx
     values:
       # https://helmfile.readthedocs.io/en/latest/#loading-remote-environment-values-files
-      - git::https://github.com/TourmalineCore/pelican-ui.git@/ci/values.yaml?ref=de6d19eb1f359a6ef1d4b2d44fb4376525b858dc
+      - git::https://github.com/TourmalineCore/pelican-ui.git@/ci/values.yaml?ref=98e244e3cc3927669ccb02f242b16147a6f75eaa
       - values.yaml.gotmpl
       - values-ui.yaml.gotmpl
 
