@@ -53,7 +53,7 @@ jobs:
 
           git add $PATH_TO_HELMFILE
 
-          git commit -f commit_message.txt
+          git commit -F commit_message.txt
           
           git push origin $BRANCH_NAME
 
