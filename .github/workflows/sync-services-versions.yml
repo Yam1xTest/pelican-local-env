@@ -20,7 +20,7 @@ jobs:
 
       - name: echo commit message
         run: 
-          echo -e "${{ github.event.client_payload.commit_message }}" > commit_message.txt
+          echo -e "${{ toJson(github.event.client_payload.commit_message) }}" > commit_message.txt
 
       - name: cat
         run: cat commit_message.txt
