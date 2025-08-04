@@ -55,7 +55,7 @@ jobs:
 
           git add $PATH_TO_HELMFILE
 
-          git commit -m ${{ toJson(github.event.client_payload.commit_message) }}
+          git commit -m ${{ fromJson(toJson(github.event.client_payload.commit_message)) }}
           
           git push origin $BRANCH_NAME
 
