@@ -55,7 +55,7 @@ jobs:
 
           git add $PATH_TO_HELMFILE
 
-          git commit -m ${{ fromJson(toJson(github.event.client_payload.commit_message)) }}
+          git commit -F commit_message.txt
           
           git push origin $BRANCH_NAME
 
@@ -63,12 +63,12 @@ jobs:
         run: 'echo "PR_TITLE=sync: ${{ github.event.client_payload.repository }} image tag" >> $GITHUB_ENV' 
         
       - name: Create PR
-        run: gh pr create -B master -H $BRANCH_NAME --title "${{ env.PR_TITLE }}" --body ${{ toJson(github.event.client_payload.commit_message) }}
+        run: gh pr create -B master -H $BRANCH_NAME --title "${{ env.PR_TITLE }}" -F commit_message.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Enable auto-merge for PR
-        run: gh pr merge $BRANCH_NAME --merge --subject "${{ env.PR_TITLE }}" --body ${{ toJson(github.event.client_payload.commit_message) }}
+        run: gh pr merge $BRANCH_NAME --merge --subject "${{ env.PR_TITLE }}" -F commit_message.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
