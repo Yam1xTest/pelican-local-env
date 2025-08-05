@@ -25,6 +25,13 @@ jobs:
           # Example of PATH_TO_HELMFILE: deploy/helmfile.yaml
           echo "PATH_TO_HELMFILE=${{ github.event.client_payload.path_to_helmfile }}" >> $GITHUB_ENV
 
+      # double quotes and new lines in multiline commit message breaks the sync workflow
+      # using json to file trick that replaces double quotes and new lines with \" and \n
+      # -e is used to enable interpretation of the following backslash escapes (e.g \n)
+      - name: Write commit message to file
+        run: 
+          echo -e ${{ toJson(github.event.client_payload.commit_message) }} > commit_message.txt
+
         # We tried to use yq to change the image tag, but in the values files for helmfile we have non-yaml code that yq can`t parse or ignore
         # so for that reason we use Stream EDitor which can find needeed string using regular expressions and change it to a new value
         # The -i flag is needed to write new image tag directly to values file
@@ -49,7 +56,7 @@ jobs:
 
           git add $PATH_TO_HELMFILE
 
-          git commit -m "${{ github.event.client_payload.commit_message }}"
+          git commit -F commit_message.txt
           
           git push origin $BRANCH_NAME
 
@@ -57,12 +64,12 @@ jobs:
         run: 'echo "PR_TITLE=sync: ${{ github.event.client_payload.repository }} image tag" >> $GITHUB_ENV' 
         
       - name: Create PR
-        run: gh pr create -B master -H $BRANCH_NAME --title "${{ env.PR_TITLE }}" --body "${{ github.event.client_payload.commit_message }}"
+        run: gh pr create -B master -H $BRANCH_NAME --title "${{ env.PR_TITLE }}" -F commit_message.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Enable auto-merge for PR
-        run: gh pr merge $BRANCH_NAME --auto --merge --subject "${{ env.PR_TITLE }}" --body "${{ github.event.client_payload.commit_message }}"
+        run: gh pr merge $BRANCH_NAME --auto --merge --subject "${{ env.PR_TITLE }}" -F commit_message.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
